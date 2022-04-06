@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<meta charset="utf-8">
+		<title>🐹🍎ゆゆこ🍎🐹ファミリーボード返信掲示板</title>
+		<!-- スタイルシート -->
+		<link rel="stylesheet" type="text/css" href="/views/css/product.css">
+
+		<!-- Vue.js -->
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js" defer></script>
+
+		<!-- axios：HTTP通信を超簡単に行うことができるJavaScriptライブラリ -->
+		<script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
+
+		<!-- Vueインスタンス -->
+		<script src="/views/js/vueProduct.js" defer></script>
+
+		<!-- パスワード入力画面を開く -->
+		<script>
+			window.addEventListener('load', (event) => {
+				document.getElementById('button1').addEventListener('click', () => {
+					var options = "menubar=yes";
+					window.open('password.html', 'Password入力', options);
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div id="app">
+			<h1>🐹🍎ゆゆこ🍎🐹ファミリーボード返信掲示板</h1>
+
+			<!-- 検索条件 -->
+			<p>宛先：<input type="text" name='productName' v-model="productName" v-bind:class="{'alert-color': !validate }" value='' size="40"></p>
+			<p>メッセージ：<input type="text" name='productMessage' v-model="productMessage" value='' size="40"></p>
+
+			<!-- 送信ボタン -->
+			<button v-on:click="doAddProduct" v-bind:disabled="!isEntered">
+				送信
+			</button>
+			<hr>
+			<table>
+				<!-- テーブルヘッダ -->
+				<thead v-pre>
+					<tr>
+						<th class="index">No</th>
+						<th class="name">宛先</th>
+						<th class="etsuran">閲覧</th>
+						<th class="delete">削除</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="(item, index) in computedProducts">
+						<td class="index">{{ index + 1 }}</td>
+						<td class="name">{{ item.Name }}</td>
+						<td class="etsuran">
+							<!-- 閲覧ボタン -->
+							<button id="button1">
+								閲覧
+							</button>
+						</td>
+						<td class="delete">
+							<!-- 削除ボタン -->
+							<button v-on:click="doDeleteProduct(index + 1)">
+								削除
+							</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</body>
+<html>
