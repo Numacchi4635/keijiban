@@ -14,17 +14,6 @@
 
 		<!-- Vueインスタンス -->
 		<script src="/views/js/vueProduct.js" defer></script>
-
-		<!-- パスワード入力画面を開く -->
-//		<script>
-//			console.debug(window.getElementById('button1'));
-//			window.addEventListener('load', (event) => {
-//				document.getElementById('button1').addEventListener('click', () => {
-//					var options = "menubar=yes";
-//					window.open('password.html', 'Password入力', options);
-//				});
-//			});
-		</script>
 	</head>
 	<body>
 		<div id="app">
@@ -55,7 +44,9 @@
 						<td class="name">{{ item.Name }}</td>
 						<td class="etsuran">
 							<!-- 閲覧ボタン -->
-							<input type="button" value="閲覧" id="button1">
+							<button id="button1" v-on:click="openPasswordPage(index + 1)">
+								閲覧
+							</button>
 						</td>
 						<td class="delete">
 							<!-- 削除ボタン -->
@@ -67,11 +58,5 @@
 				</tbody>
 			</table>
 		</div>
-		<script>
-			let button1 = document.getElementById('button1');
-			button1.addEventListener('click', () => {
-				window.open('password.html');
-			});
-		</script>
 	</body>
 <html>

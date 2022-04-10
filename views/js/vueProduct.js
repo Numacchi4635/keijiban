@@ -120,6 +120,19 @@ console.log(ID)
 				}
 			})
 		},
+		// パスワード入力ページを開く
+		openPasswordPage(ID) {
+console.log(ID);
+			window.addEventListener('click', (event) => {
+console.log(ID);
+console.debug(window.getElementById('button1'));
+				document.getElementById('button1').addEventListener('click', () => {
+console.log(ID);
+					var options = "menubar=yes";
+					window.open('password.html', 'Password入力', options);
+				});
+			});
+		},
 		// 入力値を初期化する
 		initInputValue() {
 			this.productName = ''
