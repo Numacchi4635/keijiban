@@ -126,12 +126,11 @@ console.log(ID)
 			window.open('password.html', 'Password入力', options);
 		},
 		// パスワード入力ページにデータを渡す
-		openPasswordPage2(ID) {
-			var options = "id=" + ID;
+		openPasswordPage2(item, ID) {
+console.log(item.ID);
+console.log(item.Password);
+			var options = "id=" + item.ID;
 			var obj_window = window.open('password.html', 'Password入力', options);
-			// 親ウインドウから子ウィンドウへ値を渡す
-			obj_window.document.getElementById("ID").value = document.getElementById("ID").innerHTML;
-			obj_window.document.getElementById("chl_password").value = document.getElementById("pr_password").innerHTML;
 		},
 		// パスワード照合
 		collationPassword(ID) {
