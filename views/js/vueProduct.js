@@ -120,16 +120,38 @@ console.log(ID)
 				}
 			})
 		},
-		// パスワード入力ページを開く
-		openPasswordPage(ID) {
-			var options = "id=" + ID;
-			window.open('password.html', 'Password入力', options);
-		},
-		// パスワード入力ページにデータを渡す
-		openPasswordPage2(item) {
+		// パスワード処理
+		openPasswordPage(item) {
 console.debug(item);
-			var options = "id=" + item.id;
-			var obj_window = window.open('password.html', 'Password入力', options);
+			let password = prompt('パスワードを入力してください');
+console.log(password);
+console.log(item.Password);
+			if ( password === item.Password) {
+				console.log('パスワードは一致しています');
+				console.log(item.Name);
+				console.log(item.Message);
+				let baseurl = './message.html';
+
+				let urlParameter = {
+					name: item.Name,
+					message: item.Message
+				};
+				let newurl = baseurl + "?" + 
+					Object.entries(urlParameter).map((e) => {
+							let key = e[0];
+							let value = encodeURI(e[1]);
+							return `${key}=${value}`;
+						}).join("&");
+				console.log(newurl);
+				location.href = newurl;
+			} else {
+				console.log('パスワードが違います');
+				location.assign('./error.html');
+			}
+		},
+		// パスワードを照合する
+		collationPassword(ID) {i
+console.log(ID);
 		},
 		// 入力値を初期化する
 		initInputValue() {
