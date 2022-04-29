@@ -10,6 +10,9 @@ import (
 	// エラー
 	"errors"
 
+	// Debug
+	"fmt"
+
 	// Gin
 	"github.com/gin-gonic/gin"
 
@@ -76,9 +79,13 @@ func MakeRandomStr(digit uint32) (string, error){
 
 // DeleteProduct は 掲示板情報をDBから削除する
 func DeleteProduct(c *gin.Context) {
+fmt.Println("DeleteProduct Start");
 	productIDStr := c.PostForm("productID")
+fmt.Println(productIDStr);
 
 	productID, _ := strconv.Atoi(productIDStr)
+
+fmt.Println(productID);
 
 	db.DeleteProduct(productID)
 }

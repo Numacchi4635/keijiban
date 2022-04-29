@@ -6,6 +6,8 @@ new Vue({
 	data: {
 		// 掲示板情報
 		products: [],
+		// ID
+		productID: '',
 		// 宛先
 		productName: '',
 		// メッセージ
@@ -108,9 +110,15 @@ new Vue({
 			// サーバへ送信するパラメータ
 //			const params = new URLSearchParams()
 //			params.append('productID', product.ID)
+//			params.append('productID', ID)
 console.log(ID)
 
-			axios.post('/deleteProduct', params)
+//			axios.post('/deleteProduct', params)
+			axios.post('/deleteProduct', {
+					params: {
+						productID :ID
+					}
+			})
 			.then(response => {
 				if (response.status != 200) {
 					throw new Error('deleteProduct Response Error')

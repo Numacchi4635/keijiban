@@ -7,10 +7,10 @@
 		<link rel="stylesheet" type="text/css" href="/views/css/product.css">
 
 		<!-- Vue.js -->
-		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js" defer></script>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
 
 		<!-- axios：HTTP通信を超簡単に行うことができるJavaScriptライブラリ -->
-		<script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 		<!-- Vueインスタンス -->
 		<script src="/views/js/vueProduct.js" defer></script>
@@ -46,6 +46,7 @@
 							<!-- 閲覧ボタン -->
 							<button id="button1" v-on:click="openPasswordPage(item)">
 								閲覧
+							</button>
 						</td>
 						<td class="delete">
 							<!-- 削除ボタン -->
