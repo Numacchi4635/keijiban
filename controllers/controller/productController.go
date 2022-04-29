@@ -10,9 +10,6 @@ import (
 	// エラー
 	"errors"
 
-	// Debug
-	"fmt"
-
 	// Gin
 	"github.com/gin-gonic/gin"
 
@@ -33,23 +30,11 @@ func FetchAllProducts(c *gin.Context) {
 
 // FindProduct は 指定したIDの掲示板情報を取得する
 func FindProduct(c *gin.Context) {
-fmt.Println("FindProduct Start")
 	productIDStr := c.Query("productID")
-	productPasswordStr := c.Query("productPassword")
-fmt.Println("Password=")
-fmt.Println(productPasswordStr)
 
 	productID, _ := strconv.Atoi(productIDStr)
 
 	resultProduct, _ := db.FindProduct(productID)
-
-// fmt.Println(resultProduct.Password)
-	// 入力パスワードと登録パスワードの照合
-//	if ( resultProduct.Password != productPasswordStr ){
-		// URLへのアクセスに対してJSON(401)を返す
-//		c.JSON(401, resultProduct)
-//		return
-//	}
 
 	// URLへのアクセスに対してJSONを返す
 	c.JSON(200, resultProduct)
