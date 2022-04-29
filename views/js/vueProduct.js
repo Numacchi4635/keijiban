@@ -122,6 +122,8 @@ console.log(ID)
 		},
 		// パスワード処理
 		openPasswordPage(item) {
+console.log('openPasswordPage Start');
+console.log(item.ID);
 
 			// パスワード入力ダイアログ表示
 			let password = prompt('パスワードを入力してください');
@@ -131,11 +133,9 @@ console.log(ID)
 
 				// 一致している場合は、メッセージ表示画面へ
 				let baseurl = './message.html';
-
 				// パラメータ付きURL作成
 				let urlParameter = {
-					name: item.Name,
-					message: item.Message
+					id: item.ID
 				};
 				let newurl = baseurl + "?" + 
 					Object.entries(urlParameter).map((e) => {
@@ -143,6 +143,7 @@ console.log(ID)
 							let value = encodeURI(e[1]);
 							return `${key}=${value}`;
 						}).join("&");
+console.log(newurl);
 				location.href = newurl;
 			} else {
 

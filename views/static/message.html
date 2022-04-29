@@ -8,8 +8,36 @@
 	</head>
 	<body>
 		<p>メッセージを表示します</p>
-		<ul id="messageinfo"></ul>
+
+		<div id="app">
+
+			<table>
+				<!-- テーブルヘッダ -->
+				<thead v-pre>
+					<tr>
+						<th class="index">No</th>
+						<th class="name">宛先</th>
+						<th class="message">メッセージ</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="index">{{ productID }}</td>
+						<td class="name">{{ productName }}</td>
+						<td class="mesage">{{ productMessage }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
 		<p><input type="button" value="掲示板一覧へ戻る" id="modoru"><p>
+
+		<!-- Vue.js -->
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js" defer></script>
+
+		<!-- axios：HTTP通信を超簡単に行うことができるJavaScriptライブラリ -->
+		<script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
+
 		<script>
 			// 掲示板一覧へ戻る機能
 			let modoru = document.getElementById('modoru');
@@ -21,15 +49,62 @@
 			// URLパラメータ取得
 			let url = new URL(window.location.href);
 			let params = url.searchParams;
-			let Name = params.get('name');
-			let Message = params.get('message');
+			let Id = params.get('id');
+
+			// Vue
+			var app = new Vue({
+				el: "#app",
+				data: {
+					productID: '',
+					productName: '',
+					productMessage: ''
+				},
+				methods: {
+					window:onload = function(ID){
+						axios.get('/fetchProduct', {
+							params: {
+								productID: ID
+							}
+						})
+						.then(response => {
+							if (response.status != 200) {
+								throw new Error('fetchProduct Response Error')
+							} else {
+								var resultProducts = response.data
+
+								// 選択された掲示板情報のインデックスを取得する
+//								var index = this.products.indexOf(product)
+								var index = ID
+
+								// spliceを使うとdataプロパティの配列の要素をリアクティブに変更できる
+								this.products.splice(index, 1, resultProducts[0])
+							}
+						})
+					}
+				}
+			});
+
+			// IDからデータ取得
+//			axios.get('/fetchProduct', {
+//				params: {
+//						productID: ID
+//				}
+//			})
+//			.then(response => {
+//				if (response.status != 200) {
+//					throw new Error('fetchProduct Response Error');
+//				} else {
+//					var resultProduct = response.data;
+//					console.log(resultProduct);
+//				}
+//			});
 
 			// メッセージっ表示タグ生成
-			let displayTag = '<table><thead><tr><th class="name">宛先</th><th class="message">メッセージ</th><tr><thead><tbody><tr><td class="name">' + Name + '</td>' + '<td class="message">' + Message + '</td></tr></tbody></table>';
+//			let displayTag = '<table><thead><tr><th class="name">宛先</th><th class="message">メッセージ</th><tr><thead><tbody><tr><td class="name">' + Name + '</td>' + '<td class="message">' + Message + '</td></tr></tbody></table>';
 
 			// メッセージ表示
-			let element = document.getElementById('messageinfo');
-			element.insertAdjacentHTML('afterend',  displayTag);
+//			let element = document.getElementById('messageinfo');
+//			element.insertAdjacentHTML('afterend',  displayTag);
 		</script>
 	</body>
 </html>
