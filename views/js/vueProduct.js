@@ -77,7 +77,6 @@ new Vue({
 					var resultProducts = response.data
 
 					// 選択された掲示板情報のインデックスを取得する
-//					var index = this.products.indexOf(product)
 					var index = ID
 
 					// spliceを使うとdataプロパティの配列の要素をリアクティブに変更できる
@@ -108,17 +107,10 @@ new Vue({
 		// 掲示板情報を削除する
 		doDeleteProduct(ID) {
 			// サーバへ送信するパラメータ
-//			const params = new URLSearchParams()
-//			params.append('productID', product.ID)
-//			params.append('productID', ID)
-console.log(ID)
+			const params = new URLSearchParams()
+			params.append('productID', ID)
 
-//			axios.post('/deleteProduct', params)
-			axios.post('/deleteProduct', {
-					params: {
-						productID :ID
-					}
-			})
+			axios.post('/deleteProduct', params)
 			.then(response => {
 				if (response.status != 200) {
 					throw new Error('deleteProduct Response Error')
@@ -130,8 +122,6 @@ console.log(ID)
 		},
 		// パスワード処理
 		openPasswordPage(item) {
-console.log('openPasswordPage Start');
-console.log(item.ID);
 
 			// パスワード入力ダイアログ表示
 			let password = prompt('パスワードを入力してください');
@@ -151,7 +141,6 @@ console.log(item.ID);
 							let value = encodeURI(e[1]);
 							return `${key}=${value}`;
 						}).join("&");
-console.log(newurl);
 				location.href = newurl;
 			} else {
 

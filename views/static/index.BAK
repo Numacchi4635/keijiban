@@ -50,7 +50,7 @@
 						</td>
 						<td class="delete">
 							<!-- 削除ボタン -->
-							<button v-on:click="doDeleteProduct(index + 1)">
+							<button v-on:click="doDeleteProduct(item.ID + 1)">
 								削除
 							</button>
 						</td>
