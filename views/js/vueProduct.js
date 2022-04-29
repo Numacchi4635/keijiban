@@ -122,16 +122,17 @@ console.log(ID)
 		},
 		// パスワード処理
 		openPasswordPage(item) {
-console.debug(item);
+
+			// パスワード入力ダイアログ表示
 			let password = prompt('パスワードを入力してください');
-console.log(password);
-console.log(item.Password);
+
+			// パスワードを照合する
 			if ( password === item.Password) {
-				console.log('パスワードは一致しています');
-				console.log(item.Name);
-				console.log(item.Message);
+
+				// 一致している場合は、メッセージ表示画面へ
 				let baseurl = './message.html';
 
+				// パラメータ付きURL作成
 				let urlParameter = {
 					name: item.Name,
 					message: item.Message
@@ -142,16 +143,12 @@ console.log(item.Password);
 							let value = encodeURI(e[1]);
 							return `${key}=${value}`;
 						}).join("&");
-				console.log(newurl);
 				location.href = newurl;
 			} else {
-				console.log('パスワードが違います');
+
+				// パスワードが一致していない場合は、エラー画面へ
 				location.assign('./error.html');
 			}
-		},
-		// パスワードを照合する
-		collationPassword(ID) {i
-console.log(ID);
 		},
 		// 入力値を初期化する
 		initInputValue() {

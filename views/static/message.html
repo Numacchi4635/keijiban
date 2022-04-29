@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<meta charset="utf-8">
+		<title>メッセージ表示</title>
+		<!-- スタイルシート -->
+		<link rel="stylesheet" type="text/css" href="/views/css/message.css">
+	</head>
+	<body>
+		<p>メッセージを表示します</p>
+		<ul id="messageinfo"></ul>
+		<p><input type="button" value="掲示板一覧へ戻る" id="modoru"><p>
+		<script>
+			// 掲示板一覧へ戻る機能
+			let modoru = document.getElementById('modoru');
+			modoru.addEventListener('click', function(){
+				location.assign('./index.html');
+			});
+
+
+			// URLパラメータ取得
+			let url = new URL(window.location.href);
+			let params = url.searchParams;
+			let Name = params.get('name');
+			let Message = params.get('message');
+
+			// メッセージっ表示タグ生成
+			let displayTag = '<table><thead><tr><th class="name">宛先</th><th class="message">メッセージ</th><tr><thead><tbody><tr><td class="name">' + Name + '</td>' + '<td class="message">' + Message + '</td></tr></tbody></table>';
+
+			// メッセージ表示
+			let element = document.getElementById('messageinfo');
+			element.insertAdjacentHTML('afterend',  displayTag);
+		</script>
+	</body>
+</html>
