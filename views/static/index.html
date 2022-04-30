@@ -7,10 +7,10 @@
 		<link rel="stylesheet" type="text/css" href="/views/css/product.css">
 
 		<!-- Vue.js -->
-		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js" defer></script>
 
 		<!-- axios：HTTP通信を超簡単に行うことができるJavaScriptライブラリ -->
-		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
 
 		<!-- Vueインスタンス -->
 		<script src="/views/js/vueProduct.js" defer></script>
@@ -19,14 +19,8 @@
 		<div id="app">
 			<h1>🐹🍎ゆゆこ🍎🐹ファミリーボード返信掲示板</h1>
 
-			<!-- 検索条件 -->
-			<p>宛先：<input type="text" name='productName' v-model="productName" v-bind:class="{'alert-color': !validate }" value='' size="40"></p>
-			<p>メッセージ：<input type="text" name='productMessage' v-model="productMessage" value='' size="40"></p>
-
-			<!-- 送信ボタン -->
-			<button v-on:click="doAddProduct" v-bind:disabled="!isEntered">
-				送信
-			</button>
+			<!-- メッセージ作成ページへ移動するボタン -->
+			<button id="yuyukobutton" v-on:click="openSuperUserPassword()">ゆゆこ専用メッセージ作成ページへ</button>
 			<hr>
 			<table>
 				<!-- テーブルヘッダ -->

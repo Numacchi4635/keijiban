@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<meta charset="utf-8">
+		<title>🐹🍎ゆゆこ🍎🐹専用メッセージ投稿ページ</title>
+
+		<!-- Vue.js -->
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js" defer></script>
+
+		<!-- axios：HTTP通信を超簡単に行うことができるJavaScriptライブラリ -->
+		<script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
+
+		<!-- Vueインスタンス -->
+		<script src="/views/js/messagecreate.js" defer></script>
+	</head>
+	<body>
+		<div id="app">
+			<h1>🐹🍎ゆゆこ🍎🐹専用メッセージ投稿ページ</h1>
+
+				<p>宛先：<input type="text" name='productName' v-model="productName" v-bind:class="{'alert-color': !validate }" value='' size="40"></p>
+				<p>メッセージ：<input type="text" name='productMessage' v-model="productMessage" value='' size="40"></p>
+				<!-- 送信ボタン -->
+				<button v-on:click="doAddProduct" v-bind:disabled="!isEntered">
+					送信
+				</button>
+		</div>
+	</body>
+</html>

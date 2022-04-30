@@ -120,6 +120,12 @@ new Vue({
 				}
 			})
 		},
+		// 管理者専用パスワード処理
+		openSuperUserPassword() {
+			let password = prompt('管理者専用パスワードを入力してください');
+			let url = './messagecreate.html';
+			location.href = url;
+		},
 		// パスワード処理
 		openPasswordPage(item) {
 
