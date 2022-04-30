@@ -20,20 +20,15 @@
 		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
 
 		<!-- axios：HTTP通信を超簡単に行うことができるJavaScriptライブラリ -->
-		<script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
+		<script src="/views/js/message.js"></script>
 		<script>
 			// 掲示板一覧へ戻る機能
 			let modoru = document.getElementById('modoru');
 			modoru.addEventListener('click', function(){
 				location.assign('./index.html');
 			});
-
-
-			// URLパラメータ取得
-//			let url = new URL(window.location.href);
-//			let params = url.searchParams;
-//			let Id = params.get('id');
 
 			// Vue
 			var app = new Vue({
@@ -69,26 +64,11 @@ console.log(displayTag);
 								// メッセージ表示
 								let element = document.getElementById('messageinfo');
 								element.insertAdjacentHTML('afterend',  displayTag);
-
-
-								// 選択された掲示板情報のインデックスを取得する
-//								var index = this.products.indexOf(product)
-//								var index = Id
-
-								// spliceを使うとdataプロパティの配列の要素をリアクティブに変更できる
-//								this.products.splice(index, 1, resultProducts[0])
 							}
 						})
 					}
 				}
 			});
-
-			// メッセージっ表示タグ生成
-//			let displayTag = '<table><thead><tr><th class="name">宛先</th><th class="message">メッセージ</th><tr><thead><tbody><tr><td class="name">' + Name + '</td>' + '<td class="message">' + Message + '</td></tr></tbody></table>';
-
-			// メッセージ表示
-//			let element = document.getElementById('messageinfo');
-//			element.insertAdjacentHTML('afterend',  displayTag);
 		</script>
 	</body>
 </html>
