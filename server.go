@@ -5,7 +5,7 @@ import (
 	"log"
 
 	// HTTPを扱うパッケージ
-	"net/http"
+//	"net/http"
 
 	// Gin
 	"github.com/gin-gonic/gin"
@@ -14,7 +14,7 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 
 	// コントローラ
-	controller "github.com/Numacchi4635/keijiban/controllers/controller"
+//	controller "github.com/Numacchi4635/keijiban/controllers/controller"
 )
 
 func main() {
