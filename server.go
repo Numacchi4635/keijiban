@@ -40,7 +40,7 @@ func server() {
 	}
 
 fmt.Println(path);
-fileInfos, err := ioutil.ReadDir(path)
+fileInfos, err := ioutil.ReadDir(path+"/views")
 if err != nil {
 	log.Fatal(err)
 	}
