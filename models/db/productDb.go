@@ -67,10 +67,12 @@ func FindProduct(productID int) ([]entity.Product, error) {
 
 // InsertProduct は 掲示板テーブルにレコードを追加する
 func InsertProduct(registerProduct *entity.Product) {
+fmt.Println("InsertProduct Start");
 	db := open()
 	// insert
 	db.Create(&registerProduct)
 	defer db.Close()
+fmt.Println("InsertProduct End");
 }
 
 // DeleteProduct は 掲示板テーブルの指定したレコードを削除する

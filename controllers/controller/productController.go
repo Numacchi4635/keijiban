@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	// 文字列と基本データの変換
 	strconv "strconv"
 
@@ -45,6 +46,7 @@ func FindProduct(c *gin.Context) {
 
 // AddProduct は 掲示板情報をDBへ登録する
 func AddProduct(c *gin.Context) {
+fmt.Println("AddProduct Start");
 	productName := c.PostForm("productName")
 	productMessage := c.PostForm("productMessage")
 	productPassword, _ := MakeRandomStr(128)
@@ -56,6 +58,7 @@ func AddProduct(c *gin.Context) {
 	}
 
 	db.InsertProduct(&product)
+fmt.Println("AddProduct End");
 }
 
 // 推測不可能なパスワード生成
