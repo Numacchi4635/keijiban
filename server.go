@@ -10,7 +10,7 @@ import (
 	"log"
 
 	// HTTPを扱うパッケージ
-//	"net/http"
+	"net/http"
 
 	// Gin
 	"github.com/gin-gonic/gin"
@@ -51,11 +51,11 @@ for _, fileInfo := range fileInfos {
 
 	// 静的ファイルのパスを指定
 	router.Static("/views", path+"/views")
-/*
+
 	// ルーターの設定
 	// URLへのアクセスに対して静的ページを返す
 	router.StaticFS("/keijiban", http.Dir("./views/static"))
-
+/*
 	// 全ての掲示板情報のJSONを返す
 	router.GET("/fetchAllProducts", controller.FetchAllProducts)
 
