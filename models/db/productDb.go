@@ -4,6 +4,8 @@ import (
 	// フォーマットI/O
 	"fmt"
 
+	"os"
+
 	// Go言語のORM
 	"github.com/jinzhu/gorm"
 
@@ -14,11 +16,7 @@ import (
 // DB接続する
 func open() *gorm.DB {
 	DBMS := "mysql"
-	USER := "root"
-	PASS := "Dms1234a"
-	PROTOCOL := "tcp(localhost:3306)"
-	DBNAME := "keijiban"
-	CONNECT := USER + ":" + PASS + "@" + PROTOCOL + "/" + DBNAME
+	CONNECT := os.Getenv("CONNECT")
 	db, err := gorm.Open(DBMS, CONNECT)
 
 	if err != nil {
@@ -63,8 +61,6 @@ func FindProduct(productID int) ([]entity.Product, error) {
 	// select
 	db.First(&product, productID)
 	defer db.Close()
-fmt.Println("FindProduct")
-fmt.Println(product)
 
 	return product, nil
 }
