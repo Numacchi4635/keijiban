@@ -19,7 +19,7 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 
 	// コントローラ
-//	controller "github.com/Numacchi4635/keijiban/controllers/controller"
+	controller "github.com/Numacchi4635/keijiban/controllers/controller"
 )
 
 func main() {
@@ -55,7 +55,7 @@ for _, fileInfo := range fileInfos {
 	// ルーターの設定
 	// URLへのアクセスに対して静的ページを返す
 	router.StaticFS("/keijiban", http.Dir("./views/static"))
-/*
+
 	// 全ての掲示板情報のJSONを返す
 	router.GET("/fetchAllProducts", controller.FetchAllProducts)
 
@@ -70,7 +70,7 @@ for _, fileInfo := range fileInfos {
 
 	// 掲示板情報を削除する
 	router.POST("/deleteProduct", controller.DeleteProduct)
-*/
+
 	fmt.Println(os.Getenv("PORT"))
 	if err := router.Run(":"+os.Getenv("PORT")); err != nil {
 		log.Fatal("Server Run Failed.: ", err)
