@@ -20,6 +20,7 @@ func open() *gorm.DB {
 	db, err := gorm.Open(DBMS, CONNECT)
 
 	if err != nil {
+		fmt.Println(err);
 		panic(err.Error())
 	}
 
