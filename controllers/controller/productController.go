@@ -14,13 +14,13 @@ import (
 	"github.com/gin-gonic/gin"
 
 	// エンティティ(データベースのテーブルの行に対応)
-	entity "../../models/entity"
+	entity "github.com/Numacchi4635/keijiban/models/entity"
 
 	// 認証モデル
-//	authModel "../../models/authModel"
+//	authModel "github.com/Numacchi4635/keijiban/models/authModel"
 
 	// DBアクセス用モジュール
-	db "../../models/db"
+	db "github.com/Numacchi4635/keijiban/models/db"
 )
 
 // FetchAllProducts は 全ての掲示板情報を取得する

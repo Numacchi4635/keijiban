@@ -1,4 +1,4 @@
-module keijiban
+module github.com/Numacchi4635/keijiban
 
 go 1.17
 

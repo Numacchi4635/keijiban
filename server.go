@@ -14,7 +14,7 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 
 	// コントローラ
-	controller "./controllers/controller"
+	controller "github.com/Numacchi4635/keijiban/controllers/controller"
 )
 
 func main() {
