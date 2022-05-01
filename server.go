@@ -27,6 +27,7 @@ func server() {
 	// Logger と アプリケーションクラッシュをキャッチするRecoveryミドルウェアを保有しています
 	router := gin.Default()
 
+/*
 	// 静的ファイルのパスを指定
 	router.Static("/views", "./views")
 
@@ -48,7 +49,7 @@ func server() {
 
 	// 掲示板情報を削除する
 	router.POST("/deleteProduct", controller.DeleteProduct)
-
+*/
 	if err := router.Run(":8000"); err != nil {
 		log.Fatal("Server Run Failed.: ", err)
 	}
