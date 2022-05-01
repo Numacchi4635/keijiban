@@ -1,6 +1,9 @@
 package main
 
 import (
+	"path/filepath"
+	"fmt"
+
 	// ロギングを行うパッケージ
 	"log"
 
@@ -27,10 +30,15 @@ func server() {
 	// Logger と アプリケーションクラッシュをキャッチするRecoveryミドルウェアを保有しています
 	router := gin.Default()
 
-/*
-	// 静的ファイルのパスを指定
-	router.Static("/views", "./views")
+	path, err := filepath.Abs("./")
+	if err != nil {
+		fmt.Print(err.Error())
+		return
+	}
 
+	// 静的ファイルのパスを指定
+	router.Static("/views", path+"/views")
+/*
 	// ルーターの設定
 	// URLへのアクセスに対して静的ページを返す
 	router.StaticFS("/keijiban", http.Dir("./views/static"))
