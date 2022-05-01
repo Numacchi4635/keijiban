@@ -1,6 +1,7 @@
 package main
 
 import (
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"fmt"
@@ -39,6 +40,14 @@ func server() {
 	}
 
 fmt.Println(path);
+fileInfos, err := ioutil.ReadDir(path)
+if err != nil {
+	log.Fatal(err)
+	}
+
+for _, fileInfo := range fileInfos {
+	fmt.Println(fileInfo.Name())
+}
 
 	// 静的ファイルのパスを指定
 	router.Static("/views", path+"/views")
