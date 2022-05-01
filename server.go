@@ -1,6 +1,7 @@
 package main
 
 import (
+	"os"
 	"path/filepath"
 	"fmt"
 
@@ -58,7 +59,8 @@ func server() {
 	// 掲示板情報を削除する
 	router.POST("/deleteProduct", controller.DeleteProduct)
 */
-	if err := router.Run(":8000"); err != nil {
+	fmt.Println(os.Getenv("PORT"))
+	if err := router.Run(":"+os.Getenv("PORT")); err != nil {
 		log.Fatal("Server Run Failed.: ", err)
 	}
 }
