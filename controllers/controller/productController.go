@@ -16,6 +16,9 @@ import (
 	// エンティティ(データベースのテーブルの行に対応)
 	entity "../../models/entity"
 
+	// 認証モデル
+//	authModel "../../models/authModel"
+
 	// DBアクセス用モジュール
 	db "../../models/db"
 )
@@ -82,3 +85,31 @@ func DeleteProduct(c *gin.Context) {
 
 	db.DeleteProduct(productID)
 }
+
+// SuperUserLogin は スーパーユーザーのログイン認証を行う
+//func SuperUserLogin(c *gin.Context) {
+//	var request authModel.EmailLoginRequest
+//	err := c.BindJSON(&request)
+//	if err != nil {
+//		c.Status(http.StatusBadRequest)
+//	} else {
+//		// メールアドレスでDBからユーザ取得
+//		superuser, err := authRepository.GetUserByEmail(request.email)
+//		// ハッシュ値でのパスワード比較
+//		err = bcrypt.CompareHashAndPassword([]byte(superuser.Password), []byte(request.password))
+//		if err != nil {
+//			c.Status(http.StatusBadRequest)
+//		} else {
+//			session := sessions.Default(c)
+//			// セッションに格納する為にユーザ情報をJson化
+//			loginUser, err := json.Marshal(auth)
+//			if err == nil {
+//				session.Set("loginUser", string(loginUser))
+//				session.Save()
+//				c.Status(http.StatusOK)
+//			} else {
+//				c.Status(http.StatusInternalServerError)
+//			}
+//		}
+//	}
+//}

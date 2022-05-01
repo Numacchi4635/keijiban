@@ -19,7 +19,7 @@ var app = new Vue({
 			let url = new URL(window.location.href);
 			let params = url.searchParams;
 			let Id = params.get('id');
-console.log(Id);
+
 			axios.get('/fetchProduct', {
 				params: {
 					productID: Id
@@ -33,7 +33,6 @@ console.log(Id);
 
 					// 掲示板表示タグ生成
 					let displayTag = '<table><thead><tr><th class="name">宛先</th><th class="message">メッセージ</th></tr></thead><tbody><tr><td class="name">' + resultProducts[0].Name + '</td>' + '<td class="message">' + resultProducts[0].Message + '</td></tr></tbody></table>';
-console.log(displayTag);
 
 					// メッセージ表示
 					let element = document.getElementById('messageinfo');

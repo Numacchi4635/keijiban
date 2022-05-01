@@ -123,8 +123,10 @@ new Vue({
 		// 管理者専用パスワード処理
 		openSuperUserPassword() {
 			let password = prompt('管理者専用パスワードを入力してください');
-			let url = './messagecreate.html';
-			location.href = url;
+			if ( password != null ){
+				let url = './messagecreate.html';
+				location.href = url;
+			}
 		},
 		// パスワード処理
 		openPasswordPage(item) {
@@ -133,25 +135,27 @@ new Vue({
 			let password = prompt('パスワードを入力してください');
 
 			// パスワードを照合する
-			if ( password === item.Password) {
+			if ( password != null ){	// キャンセルの場合は何もしない
+				if ( password === item.Password) {
 
-				// 一致している場合は、メッセージ表示画面へ
-				let baseurl = './message.html';
-				// パラメータ付きURL作成
-				let urlParameter = {
-					id: item.ID
-				};
-				let newurl = baseurl + "?" + 
-					Object.entries(urlParameter).map((e) => {
-							let key = e[0];
-							let value = encodeURI(e[1]);
-							return `${key}=${value}`;
-						}).join("&");
-				location.href = newurl;
-			} else {
+					// 一致している場合は、メッセージ表示画面へ
+					let baseurl = './message.html';
+					// パラメータ付きURL作成
+					let urlParameter = {
+						id: item.ID
+					};
+					let newurl = baseurl + "?" + 
+						Object.entries(urlParameter).map((e) => {
+								let key = e[0];
+								let value = encodeURI(e[1]);
+								return `${key}=${value}`;
+							}).join("&");
+					location.href = newurl;
+				} else {
 
-				// パスワードが一致していない場合は、エラー画面へ
-				location.assign('./error.html');
+					// パスワードが一致していない場合は、エラー画面へ
+					location.assign('./error.html');
+				}
 			}
 		},
 		// 入力値を初期化する
