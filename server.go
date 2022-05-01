@@ -31,11 +31,14 @@ func server() {
 	// Logger と アプリケーションクラッシュをキャッチするRecoveryミドルウェアを保有しています
 	router := gin.Default()
 
+
 	path, err := filepath.Abs("./")
 	if err != nil {
 		fmt.Print(err.Error())
 		return
 	}
+
+fmt.Println(path);
 
 	// 静的ファイルのパスを指定
 	router.Static("/views", path+"/views")
