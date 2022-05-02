@@ -17,6 +17,11 @@ import (
 func open() *gorm.DB {
 	DBMS := "mysql"
 	CONNECT := os.Getenv("CONNECT")
+fmt.Println(DBMS);
+fmt.Println(CONNECT);
+
+// USER := "b8d0c0ba603a65"
+//PASS := "c34a147b"
 	db, err := gorm.Open(DBMS, CONNECT)
 
 	if err != nil {
