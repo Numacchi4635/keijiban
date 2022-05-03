@@ -75,11 +75,11 @@ for _, fileInfo := range fileInfos {
 	router.POST("/InsertSuperUserPassword", controller.AddSuperUser)
 
 	fmt.Println(os.Getenv("PORT"))
-//	if err := router.Run(":"+os.Getenv("PORT")); err != nil {
-//		log.Fatal("Server Run Failed.: ", err)
-//	}
-	if err := router.Run(":8080"); err != nil {
+	if err := router.Run(":"+os.Getenv("PORT")); err != nil {
 		log.Fatal("Server Run Failed.: ", err)
 	}
+//	if err := router.Run(":8080"); err != nil {
+//		log.Fatal("Server Run Failed.: ", err)
+//	}
 
 }
