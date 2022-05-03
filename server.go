@@ -49,6 +49,10 @@ for _, fileInfo := range fileInfos {
 	fmt.Println(fileInfo.Name())
 }
 
+	// 環境変数からDEBUG_MODE取得
+	DEBUG_MODE := os.Getenv("DEBUG_MODE")
+	fmt.Println(DEBUG_MODE)
+
 	// 静的ファイルのパスを指定
 	router.Static("/views", path+"/views")
 
@@ -74,12 +78,14 @@ for _, fileInfo := range fileInfos {
 	// SuperUserパスワードを設定・変更
 	router.POST("/InsertSuperUserPassword", controller.AddSuperUser)
 
-	fmt.Println(os.Getenv("PORT"))
-	if err := router.Run(":"+os.Getenv("PORT")); err != nil {
-		log.Fatal("Server Run Failed.: ", err)
+	if DEBUG_MODE == "true" {
+		if err := router.Run(":8080"); err != nil {
+			log.Fatal("Server Run Failed.: ", err)
+		}
+	} else {
+		fmt.Println(os.Getenv("PORT"))
+		if err := router.Run(":"+os.Getenv("PORT")); err != nil {
+			log.Fatal("Server Run Failed.: ", err)
+		}
 	}
-//	if err := router.Run(":8080"); err != nil {
-//		log.Fatal("Server Run Failed.: ", err)
-//	}
-
 }

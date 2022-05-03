@@ -15,18 +15,20 @@ import (
 
 // DB接続する
 func open() *gorm.DB {
-//DEBUG_MODE = os.Getenv("DEBUG_MODE")
-//fmt.Println(DEBUG_MODE)
+
+	// 環境変数からDEBUG_MODE取得
 
 	DBMS := "mysql"
 	CONNECT := os.Getenv("CONNECT")
-fmt.Println(DBMS);
-fmt.Println(CONNECT);
+
+	// ローカル環境の場合CONNECT設定値を下記のように上書きする
 //	USER := "root"
 //	PASS := "Dms1234a"
 //	PROTOCOL := "tcp(localhost:3306)"
 //	DBNAME := "keijiban"
 //	CONNECT := USER + ":" + PASS + "@" + PROTOCOL + "/" + DBNAME
+fmt.Println("connect情報を表示します")
+fmt.Println(CONNECT);
 
 	db, err := gorm.Open(DBMS, CONNECT)
 
