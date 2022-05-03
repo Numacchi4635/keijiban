@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<meta charset="utf-8">
+		<title>管理者Password入力エラー</title>
+	</head>
+	<body>
+		<div>
+			<p>管理者パスワードが一致していません。</p>
+			<p><input type="button" value="掲示板一覧へ戻る" id="modoru"><p>
+		</div>
+		<script>
+			let modoru = document.getElementById('modoru');
+			modoru.addEventListener('click', function(){
+				location.assign('./index.html');
+			});
+		</script>
+	</body>
+</html>

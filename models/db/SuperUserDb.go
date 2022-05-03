@@ -1,6 +1,7 @@
 package db
 
 import (
+	"os"
 	"fmt"
 
 	// Go言語のORM
@@ -13,14 +14,14 @@ import (
 // DB接続する
 func openSuperUser() *gorm.DB {
 	DBMS :="mysql"
-//	CONNECT := os.Getenv("CONNECT")
-// fmt.Println(DBMS);
-// fmt.Println(CONNECT);
-	USER := "root"
-	PASS := "Dms1234a"
-	PROTOCOL := "tcp(localhost:3306)"
-	DBNAME := "superuser"
-	CONNECT := USER + ":" + PASS + "@" + PROTOCOL + "/" + DBNAME
+	CONNECT := os.Getenv("CONNECT")
+fmt.Println(DBMS);
+fmt.Println(CONNECT);
+//	USER := "root"
+//	PASS := "Dms1234a"
+//	PROTOCOL := "tcp(localhost:3306)"
+//	DBNAME := "superuser"
+//	CONNECT := USER + ":" + PASS + "@" + PROTOCOL + "/" + DBNAME
 
 	db, err := gorm.Open(DBMS, CONNECT)
 
@@ -47,6 +48,7 @@ func openSuperUser() *gorm.DB {
 
 // FindSuperUser は スーパーユーザーテーブルのレコードを全件(登録上限は1件)取得する
 func FindSuperUser() []superuser.SuperUser {
+fmt.Println("FindSuperUser Start");
 	superusers := []superuser.SuperUser{}
 
 	db := openSuperUser()
@@ -56,6 +58,7 @@ func FindSuperUser() []superuser.SuperUser {
 	// defer 関数がreturnする時に実行される
 	defer db.Close()
 
+fmt.Println("FindSuperUser End return = ", superusers);
 	return superusers
 }
 
@@ -63,10 +66,28 @@ func FindSuperUser() []superuser.SuperUser {
 // (1件しか登録できないテーブルなので、実質新規登録になる
 // 既にテーブルにデータが存在している場合はUpDateになる
 func InsertSuperUser(registerSuperUser *superuser.SuperUser) {
-fmt.Println("InsertSuperUser Start");
+
+	// スーパーユーザーテーブルの検索
+	existSuperUser := FindSuperUser()
+
+	if len(existSuperUser) >= 1 {
+		// テーブルのレコードが存在する場合は消去する
+		for i := 0; i < len(existSuperUser); i++{
+			DeleteSuperUser(existSuperUser[i].ID)
+		}
+	}
 	db := openSuperUser()
 	// insert
 	db.Create(&registerSuperUser)
 	defer db.Close()
-fmt.Println("InsertSuperUser End");
+}
+
+// DeleteSuperUser は スーパーユーザーテーブルの指定したレコードを削除する
+func DeleteSuperUser(ID int) {
+	SuperUser := []superuser.SuperUser{}
+
+	db := openSuperUser()
+	// delete
+	db.Delete(&SuperUser, ID)
+	defer db.Close()
 }

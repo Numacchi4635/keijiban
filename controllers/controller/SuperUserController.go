@@ -36,3 +36,17 @@ fmt.Println("AddSuperUser Start");
 	db.InsertSuperUser(&SuperUser)
 fmt.Println("AddSuperSuser End")
 }
+
+func SuperUserPasswordCollation(c *gin.Context) {
+	InputPassword := c.PostForm("superUserPassword")
+fmt.Println("InputPassword = ", InputPassword);
+
+	resultSuperUser := db.FindSuperUser()
+fmt.Println("SuperUserPassword = ", resultSuperUser[0].Password);
+
+	if InputPassword == resultSuperUser[0].Password {
+		c.JSON(200, resultSuperUser)
+	} else {
+		c.JSON(201, resultSuperUser)
+	}
+}

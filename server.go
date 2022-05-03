@@ -66,6 +66,9 @@ for _, fileInfo := range fileInfos {
 	// 1つの掲示板情報のJSONを返す
 	router.GET("/fetchProduct", controller.FindProduct)
 
+	// 管理者パスワードの照合を行う
+	router.POST("/superUserPasswordCollation", controller.SuperUserPasswordCollation);
+
 	// 掲示板情報をDBへ登録する
 	router.POST("/addProduct", controller.AddProduct)
 

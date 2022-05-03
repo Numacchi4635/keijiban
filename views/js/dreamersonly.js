@@ -25,3 +25,34 @@ window.addEventListener('DOMContentLoaded', function(){
 	});
 });
 
+new Vue({
+	// 「el」プロパティーで、Vueの表示を反映する場所を定義
+	el: '#app',
+
+	// data オブジェクトの定義
+	data: {
+		// Super User ID
+		UserID: '',
+		// Super User Password
+		Password: ''
+	},
+
+	// メソッド定義
+	methods: {
+		doUpdateSuperUser() {
+console.log('doUpdataSuperUser Start');
+			// サーバへ送信するパラメータ
+			const params = new URLSearchParams();
+			params.append('UserID', this.UserID);
+			params.append('Password', this.Password);
+
+			axios.post('/InsertSuperUserPassword', params)
+			.then(response => {
+				if (response.status != 200) {
+					throw new Error('UpsateSuperUser Response Error')
+				}
+			})
+		}
+	}
+})
+

@@ -14,6 +14,8 @@ new Vue({
 		productMessage: '',
 		// パスワード
 		productPassword: '',
+		// SuperUser パスワード
+		superUserPassword: '',
 		// true:入力済・false:未入力
 		isEntered: false
 	},
@@ -123,10 +125,25 @@ new Vue({
 		// 管理者専用パスワード処理
 		openSuperUserPassword() {
 			let password = prompt('管理者専用パスワードを入力してください');
-			if ( password != null ){
-				let url = './messagecreate.html';
-				location.href = url;
-			}
+
+			// サーバーにパスワードが一致しているか問い合わせる
+			const params = new URLSearchParams()
+			params.append('superUserPassword', password)
+			axios.post('/superUserPasswordCollation', params)
+			.then(response => {
+				if (response.status == 200) {
+					// パスワードが一致している場合はmessagecreate.htmlへ
+					let url = './messagecreate.html';
+					location.href = url;
+				} else if ( response.status == 201) {
+					// パスワードが一致していない場合はエラーページへ
+					let url = './superusererror.html';
+					location.href = url;
+				} else {
+					// 上記以外のエラーの場合
+					throw new Error('fetchProduct Response Error')
+				}
+			})
 		},
 		// パスワード処理
 		openPasswordPage(item) {
