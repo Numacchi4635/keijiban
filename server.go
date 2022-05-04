@@ -78,6 +78,9 @@ for _, fileInfo := range fileInfos {
 	// 掲示板情報を削除する
 	router.POST("/deleteProduct", controller.DeleteProduct)
 
+	// ユーザーパスワードの照合
+	router.POST("/UserPasswordCollation", controller.UserPasswordCollation)
+
 	// SuperUserパスワードを設定・変更
 	router.POST("/InsertSuperUserPassword", controller.AddSuperUser)
 

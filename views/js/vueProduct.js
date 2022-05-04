@@ -147,32 +147,42 @@ new Vue({
 		},
 		// パスワード処理
 		openPasswordPage(item) {
+console.log(item);
 
 			// パスワード入力ダイアログ表示
 			let password = prompt('パスワードを入力してください');
 
 			// パスワードを照合する
 			if ( password != null ){	// キャンセルの場合は何もしない
-				if ( password === item.Password) {
+				const params = new URLSearchParams()
+				params.append('productID', item.ID)
+				params.append('productPassword', password)
 
-					// 一致している場合は、メッセージ表示画面へ
-					let baseurl = './message.html';
-					// パラメータ付きURL作成
-					let urlParameter = {
-						id: item.ID
-					};
-					let newurl = baseurl + "?" + 
-						Object.entries(urlParameter).map((e) => {
-								let key = e[0];
-								let value = encodeURI(e[1]);
-								return `${key}=${value}`;
-							}).join("&");
-					location.href = newurl;
-				} else {
+				axios.post('/UserPasswordCollation', params)
+				.then(response => {
+					if ( response.status == 200 ) {
 
-					// パスワードが一致していない場合は、エラー画面へ
-					location.assign('./error.html');
-				}
+						// 一致している場合は、メッセージ表示画面へ
+						let baseurl = './message.html';
+						// パラメータ付きURL作成
+						let urlParameter = {
+							id: item.ID
+						};
+						let newurl = baseurl + "?" + 
+							Object.entries(urlParameter).map((e) => {
+									let key = e[0];
+									let value = encodeURI(e[1]);
+									return `${key}=${value}`;
+								}).join("&");
+						location.href = newurl;
+					} else if (response.status == 201){
+
+						// パスワードが一致していない場合は、エラー画面へ
+						location.assign('./error.html');
+					} else {
+						throw new Error('fetchProduct Response Error')
+					}
+				})
 			}
 		},
 		// 入力値を初期化する

@@ -31,14 +31,16 @@ fmt.Println("connect情報を表示します")
 fmt.Println(CONNECT);
 
 	db, err := gorm.Open(DBMS, CONNECT)
-
+fmt.Println("gorm.Open End");
+fmt.Println(db);
+fmt.Println("Error = ", err);
 	if err != nil {
 		fmt.Println(err);
 		panic(err.Error())
 	}
 
 	// DBエンジンを「InnoDB」に設定
-	db.Set("gorm:table_options", "ENGINE=InnoDB")
+	db.Set("gorm:table_options", "ENGINE=InnoDB");
 
 	// 詳細なログを表示
 	db.LogMode(true)

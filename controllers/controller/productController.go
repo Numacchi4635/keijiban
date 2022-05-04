@@ -88,3 +88,18 @@ func DeleteProduct(c *gin.Context) {
 
 	db.DeleteProduct(productID)
 }
+
+// パスワード照合
+func UserPasswordCollation(c *gin.Context) {
+fmt.Println("UserPasswordCollation Start")
+	InputIDStr := c.PostForm("productID")
+	InputID, _ := strconv.Atoi(InputIDStr)
+	InputPassword := c.PostForm("productPassword")
+	resultFindProduct, _ := db.FindProduct(InputID)
+
+	if InputPassword == resultFindProduct[0].Password {
+		c.JSON(200, resultFindProduct)
+	} else {
+		c.JSON(201, resultFindProduct)
+	}
+}
