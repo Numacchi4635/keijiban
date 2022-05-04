@@ -34,7 +34,9 @@ new Vue({
 		// Super User ID
 		UserID: '',
 		// Super User Password
-		Password: ''
+		Password: '',
+		// Display Message
+		DisplayMessage: ''
 	},
 
 	// メソッド定義
@@ -50,6 +52,9 @@ console.log('doUpdataSuperUser Start');
 			.then(response => {
 				if (response.status != 200) {
 					throw new Error('UpsateSuperUser Response Error')
+					this.DisplayMessage = '管理者情報の更新に失敗しました'
+				} else {
+					this.DisplayMessage = '管理者情報の更新に成功しました'
 				}
 			})
 		}
