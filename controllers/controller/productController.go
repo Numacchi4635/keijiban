@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"fmt"
+//	"fmt"
 	// 文字列と基本データの変換
 	strconv "strconv"
 
@@ -46,7 +46,6 @@ func FindProduct(c *gin.Context) {
 
 // AddProduct は 掲示板情報をDBへ登録する
 func AddProduct(c *gin.Context) {
-fmt.Println("AddProduct Start");
 	productName := c.PostForm("productName")
 	productMessage := c.PostForm("productMessage")
 	productPassword, _ := MakeRandomStr(128)
@@ -58,7 +57,6 @@ fmt.Println("AddProduct Start");
 	}
 
 	db.InsertProduct(&product)
-fmt.Println("AddProduct End");
 }
 
 // 推測不可能なパスワード生成
@@ -91,7 +89,6 @@ func DeleteProduct(c *gin.Context) {
 
 // パスワード照合
 func UserPasswordCollation(c *gin.Context) {
-fmt.Println("UserPasswordCollation Start")
 	InputIDStr := c.PostForm("productID")
 	InputID, _ := strconv.Atoi(InputIDStr)
 	InputPassword := c.PostForm("productPassword")

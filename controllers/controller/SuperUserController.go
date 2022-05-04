@@ -2,7 +2,7 @@ package controller
 
 import ( 
 	// debug用
-	"fmt"
+//	"fmt"
 
 	// エラー
 //	"errors"
@@ -17,7 +17,6 @@ import (
 )
 
 func FindSuperUser(c *gin.Context) {
-fmt.Println("FindSuperUser Start")
 	resultSuperUser := db.FindSuperUser();
 
 	// URLへのアクセスに対してJSONを返す
@@ -25,7 +24,6 @@ fmt.Println("FindSuperUser Start")
 }
 
 func AddSuperUser(c *gin.Context) {
-fmt.Println("AddSuperUser Start");
 	superUserID := c.PostForm("UserID")
 	superUserPassword := c.PostForm("Password")
 	var SuperUser = superuser.SuperUser{
@@ -34,15 +32,12 @@ fmt.Println("AddSuperUser Start");
 		Password:superUserPassword,
 	}
 	db.InsertSuperUser(&SuperUser)
-fmt.Println("AddSuperSuser End")
 }
 
 func SuperUserPasswordCollation(c *gin.Context) {
 	InputPassword := c.PostForm("superUserPassword")
-fmt.Println("InputPassword = ", InputPassword);
 
 	resultSuperUser := db.FindSuperUser()
-fmt.Println("SuperUserPassword = ", resultSuperUser[0].Password);
 
 	if InputPassword == resultSuperUser[0].Password {
 		c.JSON(200, resultSuperUser)

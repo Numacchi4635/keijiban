@@ -108,19 +108,43 @@ new Vue({
 		},
 		// 掲示板情報を削除する
 		doDeleteProduct(ID) {
-			// サーバへ送信するパラメータ
-			const params = new URLSearchParams()
-			params.append('productID', ID)
+			// 管理者用パスワード入力
+			let password = prompt('管理者専用パスワードを入力してください');
 
-			axios.post('/deleteProduct', params)
-			.then(response => {
-				if (response.status != 200) {
-					throw new Error('deleteProduct Response Error')
-				} else {
-					// 掲示板情報を取得する
-					this.doFetchAllProducts()
-				}
-			})
+			if ( password != null ){
+				// サーバーにパスワードが一致しているか問い合わせる
+				const superuserparams = new URLSearchParams()
+				superuserparams.append('superUserPassword', password)
+
+				axios.post('/superUserPasswordCollation', superuserparams)
+				.then(response => {
+
+					// パスワードが一致している場合は削除を行う
+					if ( response.status == 200 ){
+
+						// サーバへ送信するパラメータ
+						const params = new URLSearchParams()
+						params.append('productID', ID)
+
+						axios.post('/deleteProduct', params)
+							.then(response => {
+							if (response.status != 200) {
+								throw new Error('deleteProduct Response Error')
+							} else {
+								// 掲示板情報を取得する
+								this.doFetchAllProducts()
+							}
+						})
+					} else if ( response.status == 201 ){
+						// パスワードが一致していない場合はエラーページへ
+						let url = './superusererror.html';
+						location.href = url;
+					} else {
+						// 上記以外のエラーの場合
+						throw new Error('fetchProduct Response Error')
+					}
+				})
+			}
 		},
 		// 管理者専用パスワード処理
 		openSuperUserPassword() {
