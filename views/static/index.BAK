@@ -2,18 +2,21 @@
 <html lang="ja">
 	<head>
 		<meta charset="utf-8">
-		<title>🐹🍎ゆゆこ🍎🐹ファミリーボード返信掲示板</title>
+		<title>パスワード認証機能付き返信掲示板</title>
 		<!-- スタイルシート -->
 		<link rel="stylesheet" type="text/css" href="/views/css/product.css">
 
 		<!-- Vue.js -->
-		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js" defer></script>
 
 		<!-- axios：HTTP通信を超簡単に行うことができるJavaScriptライブラリ -->
-		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
 
 		<!-- Vueインスタンス -->
-		<script src="/views/js/vueProduct.js"></script>
+		<script src="/views/js/main.js" defer></script>
+
+		<!-- 環境変数読み込み -->
+		<script src="/views/js/env/mainenv.js" defer></script>
 	</head>
 	<body>
 		<div id="app">
