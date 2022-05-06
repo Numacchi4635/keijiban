@@ -21,19 +21,7 @@ func open() *gorm.DB {
 	DBMS := "mysql"
 	CONNECT := os.Getenv("CONNECT")
 
-	// ローカル環境の場合CONNECT設定値を下記のように上書きする
-//	USER := "root"
-//	PASS := "Dms1234a"
-//	PROTOCOL := "tcp(localhost:3306)"
-//	DBNAME := "keijiban"
-//	CONNECT := USER + ":" + PASS + "@" + PROTOCOL + "/" + DBNAME
-fmt.Println("connect情報を表示します")
-fmt.Println(CONNECT);
-
 	db, err := gorm.Open(DBMS, CONNECT)
-fmt.Println("gorm.Open End");
-fmt.Println(db);
-fmt.Println("Error = ", err);
 	if err != nil {
 		fmt.Println(err);
 		panic(err.Error())

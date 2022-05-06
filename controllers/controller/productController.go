@@ -1,7 +1,11 @@
 package controller
 
 import (
-//	"fmt"
+	"C"
+	"os"
+	// Debug用
+	"fmt"
+
 	// 文字列と基本データの変換
 	strconv "strconv"
 
@@ -11,22 +15,55 @@ import (
 	// エラー
 	"errors"
 
+	// JSON
+//	"encoding/json"
+
 	// Gin
 	"github.com/gin-gonic/gin"
 
 	// エンティティ(データベースのテーブルの行に対応)
 	entity "github.com/Numacchi4635/keijiban/models/entity"
 
-	// 認証モデル
-//	authModel "github.com/Numacchi4635/keijiban/models/authModel"
-
 	// DBアクセス用モジュール
 	db "github.com/Numacchi4635/keijiban/models/db"
 )
 
+// 環境変数PUBLIC_MODEを含む返信用struct
+type resultResponse struct {
+	ID		int	`gorm:"primary_key;not null"		json:"id"`
+	Name		string	`gorm:"type:varchar(200);not null	json:"name"`
+	Message		string	`gorm:"type:varchar(400);not null	json:"message"`
+	Password	string	`gorm:"type:varchar(400):not null	json:"password"`
+	PublicMode	string
+}
+
 // FetchAllProducts は 全ての掲示板情報を取得する
 func FetchAllProducts(c *gin.Context) {
+
 	resultProducts := db.FindAllProducts()
+	var result_response[len(resultProducts)] resultResponse
+
+fmt.Println(len(resultProducts))
+
+	// 環境変数PUBLIC_MODE取得
+	PUBLIC_MODE :=  os.Getenv("PUBLIC_MODE")
+fmt.Println(PUBLIC_MODE)
+	for i := 0 ; i < len(resultProducts) ; i++ {
+		C.memcpy(result_response[i], resultProducts[i], len(resultProducts[i]))
+		result[i].puclic_mode = PUBLIC_MODE
+	}
+
+//	resultResponse	*result_response;
+
+
+//	// 環境変数PUBLIC_MODEをJSONに変換
+//	json_public_mode, err := json.Marshal(PUBLIC_MODE)
+//	if err != nil {
+//		fmt.Println(err)
+//		panic(err.Error())
+//	}
+//fmt.Println("JSON Result Products = ", resultProducts)
+//fmt.Println("JSON PUBLIC MODE = ", json_public_mode)
 
 	// URLへのアクセスに対してJSONを返す
 	c.JSON(200, resultProducts)
