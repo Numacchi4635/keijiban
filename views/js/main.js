@@ -4,6 +4,8 @@ new Vue({
 
 	// data オブジェクトのプロパティの値を変更すると、ビューが反応し、新しい値に一致するように更新
 	data: {
+		// 環境変数情報
+		pulbic_mode: [],
 		// 掲示板情報
 		products: [],
 		// ID
@@ -58,9 +60,14 @@ new Vue({
 					throw new Error('fetchAllProducts Response Error')
 				} else {
 					var resultProducts = response.data
+console.log(resultProducts)
 
 					// サーバから取得した掲示板情報をdataに設定する
+					this.public_mode = resultProducts.public_mode
 					this.products = resultProducts
+console.log(this.public_mode)
+console.log(this.products)
+
 				}
 			})
 		},

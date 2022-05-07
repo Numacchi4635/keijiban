@@ -30,10 +30,7 @@ import (
 
 // 環境変数PUBLIC_MODEを含む返信用struct
 type resultResponse struct {
-	ID		int	`gorm:"primary_key;not null"		json:"id"`
-	Name		string	`gorm:"type:varchar(200);not null	json:"name"`
-	Message		string	`gorm:"type:varchar(400);not null	json:"message"`
-	Password	string	`gorm:"type:varchar(400):not null	json:"password"`
+	resultProduct[]	entity.Product
 	PublicMode	string
 }
 
@@ -41,32 +38,19 @@ type resultResponse struct {
 func FetchAllProducts(c *gin.Context) {
 
 	resultProducts := db.FindAllProducts()
-	var result_response[len(resultProducts)] resultResponse
-
-fmt.Println(len(resultProducts))
 
 	// 環境変数PUBLIC_MODE取得
 	PUBLIC_MODE :=  os.Getenv("PUBLIC_MODE")
 fmt.Println(PUBLIC_MODE)
-	for i := 0 ; i < len(resultProducts) ; i++ {
-		C.memcpy(result_response[i], resultProducts[i], len(resultProducts[i]))
-		result[i].puclic_mode = PUBLIC_MODE
+	resultresponse := resultResponse{
+		resultProduct:	resultProducts,
+		PublicMode:	PUBLIC_MODE,
 	}
-
-//	resultResponse	*result_response;
-
-
-//	// 環境変数PUBLIC_MODEをJSONに変換
-//	json_public_mode, err := json.Marshal(PUBLIC_MODE)
-//	if err != nil {
-//		fmt.Println(err)
-//		panic(err.Error())
-//	}
-//fmt.Println("JSON Result Products = ", resultProducts)
-//fmt.Println("JSON PUBLIC MODE = ", json_public_mode)
+fmt.Println(resultresponse)
 
 	// URLへのアクセスに対してJSONを返す
-	c.JSON(200, resultProducts)
+//	c.JSON(200, resultProducts)
+	c.JSON(200, resultresponse)
 }
 
 // FindProduct は 指定したIDの掲示板情報を取得する
