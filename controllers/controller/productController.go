@@ -30,22 +30,24 @@ import (
 
 // 環境変数PUBLIC_MODEを含む返信用struct
 type resultResponse struct {
-	resultProduct[]	entity.Product
+	Products	[]entity.Product
 	PublicMode	string
 }
 
 // FetchAllProducts は 全ての掲示板情報を取得する
 func FetchAllProducts(c *gin.Context) {
-
+fmt.Println("FetchAllProducts Start")
 	resultProducts := db.FindAllProducts()
-
+fmt.Println("len = ", len(resultProducts))
 	// 環境変数PUBLIC_MODE取得
 	PUBLIC_MODE :=  os.Getenv("PUBLIC_MODE")
 fmt.Println(PUBLIC_MODE)
-	resultresponse := resultResponse{
-		resultProduct:	resultProducts,
+
+	resultresponse := resultResponse {
+		Products:	resultProducts,
 		PublicMode:	PUBLIC_MODE,
 	}
+
 fmt.Println(resultresponse)
 
 	// URLへのアクセスに対してJSONを返す

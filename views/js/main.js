@@ -4,8 +4,6 @@ new Vue({
 
 	// data オブジェクトのプロパティの値を変更すると、ビューが反応し、新しい値に一致するように更新
 	data: {
-		// 環境変数情報
-		pulbic_mode: [],
 		// 掲示板情報
 		products: [],
 		// ID
@@ -18,6 +16,8 @@ new Vue({
 		productPassword: '',
 		// SuperUser パスワード
 		superUserPassword: '',
+		// 環境変数情報
+		pulbic_mode: '',
 		// true:入力済・false:未入力
 		isEntered: false
 	},
@@ -32,6 +32,8 @@ new Vue({
 		},
 		// 表示対象の掲示板情報を返却する
 		computedProducts() {
+console.log("computedProducts Start")
+console.log(this.products)
 			return this.products.filter(function (el) {
 				var option = true
 				return option
@@ -59,13 +61,12 @@ new Vue({
 				if (response.status != 200) {
 					throw new Error('fetchAllProducts Response Error')
 				} else {
+console.log(response.data)
 					var resultProducts = response.data
 console.log(resultProducts)
 
 					// サーバから取得した掲示板情報をdataに設定する
-					this.public_mode = resultProducts.public_mode
 					this.products = resultProducts
-console.log(this.public_mode)
 console.log(this.products)
 
 				}
