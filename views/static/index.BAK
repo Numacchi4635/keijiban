@@ -17,10 +17,7 @@
 	</head>
 	<body>
 		<div id="app">
-			<h1>🐹🍎ゆゆこ🍎🐹ファミリーボード返信掲示板</h1>
-
-			<!-- メッセージ作成ページへ移動するボタン -->
-			<button id="yuyukobutton" v-on:click="openSuperUserPassword()">ゆゆこ専用メッセージ作成ページへ</button>
+			<ul id="titleinfo"></ul>
 			<hr>
 			<table>
 				<!-- テーブルヘッダ -->

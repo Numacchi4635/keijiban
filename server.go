@@ -66,6 +66,9 @@ for _, fileInfo := range fileInfos {
 	// 1つの掲示板情報のJSONを返す
 	router.GET("/fetchProduct", controller.FindProduct)
 
+	// サーバー側の環境変数を返す
+	router.GET("/responseServerEnv", controller.ResponseServerEnv)
+
 	// 管理者パスワードの照合を行う
 	router.POST("/superUserPasswordCollation", controller.SuperUserPasswordCollation);
 

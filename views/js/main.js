@@ -56,21 +56,17 @@ new Vue({
 				if (response.status != 200) {
 					throw new Error('fetchAllProducts Response Error')
 				} else {
-console.log(response.data)
 					var resultProducts = response.data
-console.log(resultProducts)
 
 					// サーバから取得した掲示板情報をdataに設定する
 					this.products = resultProducts
-console.log(this.products)
-console.log(resultProducts.Products.length)
 
 					// 取得した環境変数ごとに、タイトルを変更
 					let displayTitleTag;
 					if (resultProducts.PublicMode == 'public'){
-						displayTitleTag = '<h1>パスワード認証付き掲示板</h1><button id="yuyukobutton" v-on:click="openSuperUserPassword()">メッセージ作成ページへ</button>'
+						displayTitleTag = '<h1>パスワード認証付き掲示板</h1>'
 					} else {
-						displayTitleTag = '<h1>🐹🍎ゆゆこ🍎🐹ファミリーボード返信掲示板</h1><button id="yuyukobutton" v-on:click="openSuperUserPassword()">ゆゆこ専用メッセージ作成ページへ</button>'
+						displayTitleTag = '<h1>🐹🍎ゆゆこ🍎🐹ファミリーボード返信掲示板</h1>'
 					}
 					// タイトル表示
 					let element = document.getElementById('titleinfo');
@@ -185,7 +181,6 @@ console.log(resultProducts.Products.length)
 		},
 		// パスワード処理
 		openPasswordPage(item) {
-console.log(item);
 
 			// パスワード入力ダイアログ表示
 			let password = prompt('パスワードを入力してください');

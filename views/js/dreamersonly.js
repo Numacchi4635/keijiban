@@ -42,7 +42,6 @@ new Vue({
 	// メソッド定義
 	methods: {
 		doUpdateSuperUser() {
-console.log('doUpdataSuperUser Start');
 			// サーバへ送信するパラメータ
 			const params = new URLSearchParams();
 			params.append('UserID', this.UserID);

@@ -1,10 +1,8 @@
 package controller
 
 import (
-	"C"
+	// 環境変数取得用
 	"os"
-	// Debug用
-	"fmt"
 
 	// 文字列と基本データの変換
 	strconv "strconv"
@@ -36,22 +34,19 @@ type resultResponse struct {
 
 // FetchAllProducts は 全ての掲示板情報を取得する
 func FetchAllProducts(c *gin.Context) {
-fmt.Println("FetchAllProducts Start")
+
 	resultProducts := db.FindAllProducts()
-fmt.Println("len = ", len(resultProducts))
+
 	// 環境変数PUBLIC_MODE取得
 	PUBLIC_MODE :=  os.Getenv("PUBLIC_MODE")
-fmt.Println(PUBLIC_MODE)
 
 	resultresponse := resultResponse {
 		Products:	resultProducts,
 		PublicMode:	PUBLIC_MODE,
 	}
 
-fmt.Println(resultresponse)
 
 	// URLへのアクセスに対してJSONを返す
-//	c.JSON(200, resultProducts)
 	c.JSON(200, resultresponse)
 }
 
@@ -122,4 +117,17 @@ func UserPasswordCollation(c *gin.Context) {
 	} else {
 		c.JSON(201, resultFindProduct)
 	}
+}
+
+// 環境変数を返す
+func ResponseServerEnv(c *gin.Context) {
+	// 環境変数PUBLIC_MODE取得
+	PUBLIC_MODE :=  os.Getenv("PUBLIC_MODE")
+
+	resultresponse := resultResponse {
+		PublicMode:	PUBLIC_MODE,
+	}
+
+	// URLへのアクセスに対してJSONを返す
+	c.JSON(200, resultresponse)
 }
