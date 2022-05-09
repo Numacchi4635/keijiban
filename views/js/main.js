@@ -32,12 +32,7 @@ new Vue({
 		},
 		// 表示対象の掲示板情報を返却する
 		computedProducts() {
-console.log("computedProducts Start")
-console.log(this.products)
-			return this.products.filter(function (el) {
-				var option = true
-				return option
-			}, this)
+			return this.products.Products
 		},
 		// 入力チェック
 		validate() {
@@ -70,40 +65,16 @@ console.log(resultProducts)
 console.log(this.products)
 console.log(resultProducts.Products.length)
 
-					// index.htmlタグ生成
-					// タイトル
+					// 取得した環境変数ごとに、タイトルを変更
 					let displayTitleTag;
 					if (resultProducts.PublicMode == 'public'){
-						displayTitleTag = '<h1>パスワード認証付き掲示板<h1><button id="yuyukobutton" v-on:click="openSuperUserPassword()">管理者専用メッセージ作成ページへ</button>'
+						displayTitleTag = '<h1>パスワード認証付き掲示板</h1><button id="yuyukobutton" v-on:click="openSuperUserPassword()">メッセージ作成ページへ</button>'
 					} else {
 						displayTitleTag = '<h1>🐹🍎ゆゆこ🍎🐹ファミリーボード返信掲示板</h1><button id="yuyukobutton" v-on:click="openSuperUserPassword()">ゆゆこ専用メッセージ作成ページへ</button>'
 					}
-console.log(displayTitleTag);
-					let displayLineTag = '<hr>'
-
-					// 掲示板テーブルヘッダ
-					let displayHeaderTag = '<table><thead><tr><th class="index">No</th><th class="name">宛先</th><th class="etsuran">閲覧</th><th class="delete">削除</th></tr>'
-console.log(displayHeaderTag)
-
-					// 掲示板全データ
-					let displayDataTag = []
-					for ( let i = 0; i < resultProducts.Products.length; i++){
-						displayDataTag[i] ='<td class="index">' + (i + 1) + '</td><td class="name">' + resultProducts.Products[i].Name + '</td><td class="etsuran"><button id="button1" v-on:click="openPasswordPage(item)">閲覧</button></td><td class="delete"><button v-on:click="doDeleteProduct(item.ID)">削除</button>';
-console.log(displayDataTag[i])
-					}
-					let displayEndTag = '</table>'
-
-					// 掲示板表示
-					window.onload = function(){
-						let element = document.getElementById('keijibaninfo');
-						element.insertAdjacentHTML('afterend', displayTitleTag);
-						element.insertAdjacentHTML('afterend', displayLineTag);
-						element.insertAdjacentHTML('afterend',  displayHeaderTag);
-						for ( let i = 0; i < resultProducts.Products.length; i++){
-							element.insertAdjacentHTML('afterend', displayDataTag[i]);
-						}
-						element.insertAdjacentHTML('afterend', displayEndTag);
-					}
+					// タイトル表示
+					let element = document.getElementById('titleinfo');
+					element.insertAdjacentHTML('afterend',  displayTitleTag);
 				}
 			})
 		},

@@ -22,7 +22,35 @@
 			<!-- メッセージ作成ページへ移動するボタン -->
 			<button id="yuyukobutton" v-on:click="openSuperUserPassword()">ゆゆこ専用メッセージ作成ページへ</button>
 			<hr>
-			<ul id="keijibaninfo"></ul>
+			<table>
+				<!-- テーブルヘッダ -->
+				<thead v-pre>
+					<tr>
+						<th class="index">No</th>
+						<th class="name">宛先</th>
+						<th class="etsuran">閲覧</th>
+						<th class="delete">削除</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="(item, index) in computedProducts">
+						<td class="index">{{ index + 1 }}</td>
+						<td class="name">{{ item.Name }}</td>
+						<td class="etsuran">
+							<!-- 閲覧ボタン -->
+							<button id="button1" v-on:click="openPasswordPage(item)">
+								閲覧
+							</button>
+						</td>
+						<td class="delete">
+							<!-- 削除ボタン -->
+							<button v-on:click="doDeleteProduct(item.ID)">
+								削除
+							</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</body>
 <html>
