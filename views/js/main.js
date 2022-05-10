@@ -141,8 +141,8 @@ new Vue({
 							if (response.status != 200) {
 								throw new Error('deleteProduct Response Error')
 							} else {
-								// 掲示板情報を取得する
-								this.doFetchAllProducts()
+								// 削除成功時は、index.htmlを更新する
+								location.reload();
 							}
 						})
 					} else if ( response.status == 201 ){
