@@ -52,9 +52,22 @@ new Vue({
 						} else {
 							displayTitleTag = '<h1>🐹🍎ゆゆこ🍎🐹専用メッセージ投稿ページ</h1>'
 						}
+
 						// タイトル表示
 						let element = document.getElementById('titleinfo');
 						element.insertAdjacentHTML('afterend',  displayTitleTag);
+
+						// 環境変数privateの時のみ、メッセージボードの内容へのリンクを表示
+						if (resultResponse.PublicMode == 'private'){
+
+							// メッセージボードへのリンクボタンタグ設定
+							let displayMessageBoardTag = '<p><button type="button" onclick="window.open(\'./2021autmnmessage.html\')">2021年秋のメッセージボードへ</button></p><p><button type="button" onclick="window.open(\'./2022wintermessage.html\')">2022年冬のメッセージボードへ</button></p>'
+console.log(displayMessageBoardTag);
+							// メッセージボード表示
+							let messageBoard = document.getElementById('messageboardinfo');
+							messageBoard.insertAdjacentHTML('afterend', displayMessageBoardTag);
+						}
+
 					}
 				})
 			}

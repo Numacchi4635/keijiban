@@ -2,7 +2,7 @@
 <html lang="ja">
 	<head>
 		<meta charset="utf-8">
-		<title>🐹🍎ゆゆこ🍎🐹専用メッセージ投稿ページ</title>
+		<title>メッセージ投稿ページ</title>
 
 		<!-- Vue.js -->
 		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js" defer></script>
@@ -23,6 +23,8 @@
 			<button v-on:click="doAddProduct">
 				送信
 			</button>
+
+			<ul id="messageinfo"></ul>
 		</div>
 	</body>
 </html>
