@@ -1,7 +1,10 @@
 package db
 
 import (
+	// 環境変数取得用
 	"os"
+
+	// 標準出力用（エラーログ）
 	"fmt"
 
 	// Go言語のORM
@@ -12,22 +15,15 @@ import (
 )
 
 // DB接続する
-func openSuperUser() *gorm.DB {
+func openSuperUser() (*gorm.DB, error) {
 	DBMS :="mysql"
 	CONNECT := os.Getenv("CONNECT")
-fmt.Println(DBMS);
-fmt.Println(CONNECT);
-//	USER := "root"
-//	PASS := "Dms1234a"
-//	PROTOCOL := "tcp(localhost:3306)"
-//	DBNAME := "superuser"
-//	CONNECT := USER + ":" + PASS + "@" + PROTOCOL + "/" + DBNAME
 
 	db, err := gorm.Open(DBMS, CONNECT)
 
 	if err != nil {
 		fmt.Println(err);
-		panic(err.Error())
+		return nil, err
 	}
 
 	// DBエンジンを「InnoDB」に設定
@@ -43,29 +39,32 @@ fmt.Println(CONNECT);
 	db.AutoMigrate(&superuser.SuperUser{})
 
 	fmt.Println("db connected: ", &db)
-	return db
+	return db, nil
 }
 
 // FindSuperUser は スーパーユーザーテーブルのレコードを全件(登録上限は1件)取得する
 func FindSuperUser() []superuser.SuperUser {
-fmt.Println("FindSuperUser Start");
 	superusers := []superuser.SuperUser{}
 
-	db := openSuperUser()
+	db, err := openSuperUser()
+	if err != nil {
+		fmt.Println(err)
+		return nil;
+	}
+
 	// select
 	db.Order("ID asc").Find(&superusers)
 
 	// defer 関数がreturnする時に実行される
 	defer db.Close()
 
-fmt.Println("FindSuperUser End return = ", superusers);
 	return superusers
 }
 
 // InsertSuperUser はスーパーユーザーテーブルにレコードを追加する
 // (1件しか登録できないテーブルなので、実質新規登録になる
 // 既にテーブルにデータが存在している場合はUpDateになる
-func InsertSuperUser(registerSuperUser *superuser.SuperUser) {
+func InsertSuperUser(registerSuperUser *superuser.SuperUser) error {
 
 	// スーパーユーザーテーブルの検索
 	existSuperUser := FindSuperUser()
@@ -76,18 +75,30 @@ func InsertSuperUser(registerSuperUser *superuser.SuperUser) {
 			DeleteSuperUser(existSuperUser[i].ID)
 		}
 	}
-	db := openSuperUser()
+	db, err := openSuperUser()
+	if db == nil {
+		fmt.Println(err)
+		return err
+	}
+
 	// insert
 	db.Create(&registerSuperUser)
 	defer db.Close()
+	return nil
 }
 
 // DeleteSuperUser は スーパーユーザーテーブルの指定したレコードを削除する
-func DeleteSuperUser(ID int) {
+func DeleteSuperUser(ID int) error {
 	SuperUser := []superuser.SuperUser{}
 
-	db := openSuperUser()
+	db, err := openSuperUser()
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+
 	// delete
 	db.Delete(&SuperUser, ID)
 	defer db.Close()
+	return nil
 }

@@ -12,6 +12,9 @@ import (
 	// HTTPを扱うパッケージ
 	"net/http"
 
+	// Go言語のORM
+//	"github.com/jinzhu/gorm"
+
 	// Gin
 	"github.com/gin-gonic/gin"
 

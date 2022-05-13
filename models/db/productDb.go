@@ -14,7 +14,7 @@ import (
 )
 
 // DB接続する
-func open() *gorm.DB {
+func open() (*gorm.DB, error) {
 
 	// 環境変数からDEBUG_MODE取得
 
@@ -40,14 +40,18 @@ func open() *gorm.DB {
 	db.AutoMigrate(&entity.Product{})
 
 	fmt.Println("db connected: ", &db)
-	return db
+	return db, nil
 }
 
 // FindAllProducts は 掲示板テーブルのレコードを全件取得する
 func FindAllProducts() []entity.Product {
 	products := []entity.Product{}
 
-	db := open()
+	db, err := open()
+	if err != nil {
+		fmt.Println(err)
+		return nil;
+	}
 	// select
 	db.Order("ID asc").Find(&products)
 
@@ -61,7 +65,11 @@ func FindAllProducts() []entity.Product {
 func FindProduct(productID int) ([]entity.Product, error) {
 	product := []entity.Product{}
 
-	db := open()
+	db, err := open()
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
 	// select
 	db.First(&product, productID)
 	defer db.Close()
@@ -70,21 +78,32 @@ func FindProduct(productID int) ([]entity.Product, error) {
 }
 
 // InsertProduct は 掲示板テーブルにレコードを追加する
-func InsertProduct(registerProduct *entity.Product) {
+func InsertProduct(registerProduct *entity.Product) error {
 fmt.Println("InsertProduct Start");
-	db := open()
+	db, err := open()
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+
 	// insert
 	db.Create(&registerProduct)
 	defer db.Close()
-fmt.Println("InsertProduct End");
+	return nil
 }
 
 // DeleteProduct は 掲示板テーブルの指定したレコードを削除する
-func DeleteProduct(productID int) {
+func DeleteProduct(productID int) error {
 	product := []entity.Product{}
 
-	db := open()
+	db, err := open()
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+
 	// delete
 	db.Delete(&product, productID)
 	defer db.Close()
+	return nil
 }

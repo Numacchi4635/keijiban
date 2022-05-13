@@ -50,7 +50,6 @@ new Vue({
 			axios.post('/InsertSuperUserPassword', params)
 			.then(response => {
 				if (response.status != 200) {
-					throw new Error('UpsateSuperUser Response Error')
 					this.DisplayMessage = '管理者情報の更新に失敗しました'
 				} else {
 					this.DisplayMessage = '管理者情報の更新に成功しました'

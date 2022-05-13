@@ -24,7 +24,7 @@
 				<!-- テーブルヘッダ -->
 				<thead v-pre>
 					<tr>
-						<th class="index">No</th>
+						<th class="index">ID</th>
 						<th class="name">宛先</th>
 						<th class="etsuran">閲覧</th>
 						<th class="delete">削除</th>
@@ -32,7 +32,7 @@
 				</thead>
 				<tbody>
 					<tr v-for="(item, index) in computedProducts">
-						<td class="index">{{ index + 1 }}</td>
+						<td class="index">{{ item.ID }}</td>
 						<td class="name">{{ item.Name }}</td>
 						<td class="etsuran">
 							<!-- 閲覧ボタン -->

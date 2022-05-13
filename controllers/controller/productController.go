@@ -1,6 +1,9 @@
 package controller
 
 import (
+	// 標準出力（エラーログ）
+	"fmt"
+
 	// 環境変数取得用
 	"os"
 
@@ -10,11 +13,8 @@ import (
 	// 乱数
 	"crypto/rand"
 
-	// エラー
-	"errors"
-
-	// JSON
-//	"encoding/json"
+	// http
+	"net/http"
 
 	// Gin
 	"github.com/gin-gonic/gin"
@@ -36,30 +36,41 @@ type resultResponse struct {
 func FetchAllProducts(c *gin.Context) {
 
 	resultProducts := db.FindAllProducts()
+	if resultProducts == nil {
+		c.JSON(http.StatusBadRequest, nil)
+	}
 
 	// 環境変数PUBLIC_MODE取得
-	PUBLIC_MODE :=  os.Getenv("PUBLIC_MODE")
+	PublicMode :=  os.Getenv("PUBLIC_MODE")
 
 	resultresponse := resultResponse {
 		Products:	resultProducts,
-		PublicMode:	PUBLIC_MODE,
+		PublicMode:	PublicMode,
 	}
 
 
 	// URLへのアクセスに対してJSONを返す
-	c.JSON(200, resultresponse)
+	c.JSON(http.StatusOK, resultresponse)
 }
 
 // FindProduct は 指定したIDの掲示板情報を取得する
 func FindProduct(c *gin.Context) {
 	productIDStr := c.Query("productID")
 
-	productID, _ := strconv.Atoi(productIDStr)
+	productID, err := strconv.Atoi(productIDStr)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, nil)
+		return
+	}
 
-	resultProduct, _ := db.FindProduct(productID)
+	resultProduct, err := db.FindProduct(productID)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, nil)
+		return
+	}
 
 	// URLへのアクセスに対してJSONを返す
-	c.JSON(200, resultProduct)
+	c.JSON(http.StatusOK, resultProduct)
 }
 
 // AddProduct は 掲示板情報をDBへ登録する
@@ -84,7 +95,8 @@ func MakeRandomStr(digit uint32) (string, error){
 	// 乱数を生成
 	b := make([]byte, digit)
 	if _, err := rand.Read(b); err != nil {
-		return "", errors.New("unexpected error...")
+		fmt.Println(err)
+		return "", err
 	}
 
 	// letters からランダムに取り出して文字列を生成
@@ -100,7 +112,11 @@ func MakeRandomStr(digit uint32) (string, error){
 func DeleteProduct(c *gin.Context) {
 	productIDStr := c.PostForm("productID")
 
-	productID, _ := strconv.Atoi(productIDStr)
+	productID, err := strconv.Atoi(productIDStr)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, nil)
+		return
+	}
 
 	db.DeleteProduct(productID)
 }
@@ -108,26 +124,30 @@ func DeleteProduct(c *gin.Context) {
 // パスワード照合
 func UserPasswordCollation(c *gin.Context) {
 	InputIDStr := c.PostForm("productID")
-	InputID, _ := strconv.Atoi(InputIDStr)
+	InputID, err := strconv.Atoi(InputIDStr)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, nil)
+		return
+	}
 	InputPassword := c.PostForm("productPassword")
 	resultFindProduct, _ := db.FindProduct(InputID)
 
 	if InputPassword == resultFindProduct[0].Password {
-		c.JSON(200, resultFindProduct)
+		c.JSON(http.StatusOK, resultFindProduct)
 	} else {
-		c.JSON(201, resultFindProduct)
+		c.JSON(http.StatusUnauthorized, resultFindProduct)
 	}
 }
 
 // 環境変数を返す
 func ResponseServerEnv(c *gin.Context) {
 	// 環境変数PUBLIC_MODE取得
-	PUBLIC_MODE :=  os.Getenv("PUBLIC_MODE")
+	PublicMode :=  os.Getenv("PUBLIC_MODE")
 
 	resultresponse := resultResponse {
-		PublicMode:	PUBLIC_MODE,
+		PublicMode:	PublicMode,
 	}
 
 	// URLへのアクセスに対してJSONを返す
-	c.JSON(200, resultresponse)
+	c.JSON(http.StatusOK, resultresponse)
 }

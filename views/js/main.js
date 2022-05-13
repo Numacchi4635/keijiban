@@ -145,7 +145,7 @@ new Vue({
 								location.reload();
 							}
 						})
-					} else if ( response.status == 201 ){
+					} else if ( response.status == 401 ){
 						// パスワードが一致していない場合はエラーページへ
 						let url = './superusererror.html';
 						location.href = url;
@@ -169,7 +169,7 @@ new Vue({
 					// パスワードが一致している場合はmessagecreate.htmlへ
 					let url = './messagecreate.html';
 					location.href = url;
-				} else if ( response.status == 201) {
+				} else if ( response.status == 401) {
 					// パスワードが一致していない場合はエラーページへ
 					let url = './superusererror.html';
 					location.href = url;
@@ -208,7 +208,7 @@ new Vue({
 									return `${key}=${value}`;
 								}).join("&");
 						location.href = newurl;
-					} else if (response.status == 201){
+					} else if (response.status == 401){
 
 						// パスワードが一致していない場合は、エラー画面へ
 						location.assign('./error.html');

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<meta charset="utf-8">
+		<title>管理者パスワード設定</title>
+	</head>
+	</body>
+		<div id="app">
+			<h1>管理者パスワード設定・変更ページ</h1>
+			<p>UserID:<input type="text" name='UserID' v-model="UserID" size=40></p>
+			<p>Password:<input type="Password" id="Password" name='Password' v-model="Password" size=40><button id="btn_passview">表示</button></p>
+			<!-- 送信ボタン -->
+			<button v-on:click="doUpdateSuperUser">
+				送信
+			</button>
+			<p>{{ DisplayMessage }}
+		</div>
+		<!-- Vue.js -->
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js" defer></script>
+
+		<!-- axios：HTTP通信を超簡単に行うことができるJavaScriptライブラリ -->
+		<script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
+
+		<script src="/views/js/dreamersonly.js" defer></script>
+	</body>
+</html>
