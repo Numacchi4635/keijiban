@@ -1,5 +1,5 @@
-# exe �t�@�C���͗v��Ȃ�
+# exe ファイルは要らない
 *.exe
 
-# bak �t�@�C���͗v��Ȃ�
+# bak ファイルは要らない
 *.bak
