@@ -90,9 +90,6 @@ new Vue({
 
 					// 選択された掲示板情報のインデックスを取得する
 					var index = ID
-
-					// spliceを使うとdataプロパティの配列の要素をリアクティブに変更できる
-					this.products.splice(index, 1, resultProducts[0])
 				}
 			})
 		},

@@ -62,13 +62,13 @@ func FindAllProducts() []entity.Product {
 }
 
 // FindProduct は 掲示板テーブルのレコードを1件取得する
-func FindProduct(productID int) ([]entity.Product, error) {
-	product := []entity.Product{}
+func FindProduct(productID int) (entity.Product, error) {
+	product := entity.Product{}
 
 	db, err := open()
 	if err != nil {
 		fmt.Println(err)
-		return nil, err
+		return product, err
 	}
 	// select
 	db.First(&product, productID)
@@ -103,7 +103,11 @@ func DeleteProduct(productID int) error {
 	}
 
 	// delete
-	db.Delete(&product, productID)
+	err = db.Delete(&product, productID).Error
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
 	defer db.Close()
 	return nil
 }

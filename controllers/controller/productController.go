@@ -132,7 +132,7 @@ func UserPasswordCollation(c *gin.Context) {
 	InputPassword := c.PostForm("productPassword")
 	resultFindProduct, _ := db.FindProduct(InputID)
 
-	if InputPassword == resultFindProduct[0].Password {
+	if InputPassword == resultFindProduct.Password {
 		c.JSON(http.StatusOK, resultFindProduct)
 	} else {
 		c.JSON(http.StatusUnauthorized, resultFindProduct)

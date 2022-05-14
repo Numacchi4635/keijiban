@@ -98,7 +98,11 @@ func DeleteSuperUser(ID int) error {
 	}
 
 	// delete
-	db.Delete(&SuperUser, ID)
+	err = db.Delete(&SuperUser, ID).Error
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
 	defer db.Close()
 	return nil
 }
