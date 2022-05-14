@@ -43,7 +43,7 @@ func SuperUserPasswordCollation(c *gin.Context) {
 
 	resultSuperUser := db.FindSuperUser()
 	if resultSuperUser == nil {
-		c.JSON(http.StatusBadRequest, nil)
+		c.JSON(http.StatusInternalServerError, nil)
 	}
 
 	if InputPassword == resultSuperUser[0].Password {
