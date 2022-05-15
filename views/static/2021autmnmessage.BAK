@@ -15,8 +15,6 @@
 
 		<!-- Vueインスタンス -->
 		<script src="/views/js/messageboard.js" defer></script>
-
-		<script src="sample_cache.js?=(new Date()).getTime()"></script>
 	</head>
 	<body>
 		<div id="app">

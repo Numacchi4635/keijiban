@@ -12,6 +12,8 @@ new Vue({
 		PublicMode: '',
 		// タイトル
 		title: '',
+		// メッセージボードリンクボタン true:表示／false非表示
+		isButton: false,
 	}, 
 
 	// インスタンス作成時の処理
@@ -39,36 +41,37 @@ new Vue({
 			})
 		},
 		responseServerEnv() {
-			window.onload = function(){
-				axios.get('/responseServerEnv')
-				.then(response => {
-					if (response.status != 200) {
-						throw new Error('responseServerEnv Response Error')
+			axios.get('/responseServerEnv')
+			.then(response => {
+				if (response.status != 200) {
+					throw new Error('responseServerEnv Response Error')
+				} else {
+					var resultResponse = response.data
+
+					// 取得した環境変数毎にタイトル変更
+					if (resultResponse.PublicMode === 'public'){
+						this.title = '管理者専用メッセージ投稿ページ'
+					} else if (resultResponse.PublicMode === 'private'){
+						this.title = '🐹🍎ゆゆこ🍎🐹専用メッセージ投稿ページ'
 					} else {
-						var resultResponse = response.data
-
-						// 取得した環境変数毎にタイトル変更
-						if (resultResponse.PublicMode == 'public'){
-							this.title = '管理者専用メッセージ投稿ページ'
-						} else {
-							this.title = '🐹🍎ゆゆこ🍎🐹専用メッセージ投稿ページ'
-						}
-console.log(this.title)
-
-						// 環境変数privateの時のみ、メッセージボードの内容へのリンクを表示
-						if (resultResponse.PublicMode == 'private'){
-
-							// メッセージボードへのリンクボタンタグ設定
-							let displayMessageBoardTag = '<p><button type="button" onclick="window.open(\'./2021autmnmessage.html\')">2021年秋のメッセージボードへ</button></p><p><button type="button" onclick="window.open(\'./2022wintermessage.html\')">2022年冬のメッセージボードへ</button></p>'
-console.log(displayMessageBoardTag);
-							// メッセージボード表示
-							let messageBoard = document.getElementById('messageboardinfo');
-							messageBoard.insertAdjacentHTML('afterend', displayMessageBoardTag);
-						}
-
+						this.title = '管理者専用メッセージ投稿ページ'
 					}
-				})
-			}
+
+					// 環境変数privateの時のみ、メッセージボードの内容へのリンクを表示
+					if (resultResponse.PublicMode == 'private'){
+
+						// メッセージリンクボタン表示をtrueにする
+						this.isButton = true;
+
+						// メッセージボードへのリンクボタンタグ設定
+//						let displayMessageBoardTag = '<p><button type="button" onclick="window.open(\'./2021autmnmessage.html\')">2021年秋のメッセージボードへ</button></p><p><button type="button" onclick="window.open(\'./2022wintermessage.html\')">2022年冬のメッセージボードへ</button></p>'
+						// メッセージボード表示
+//						let messageBoard = document.getElementById('messageboardinfo');
+//						messageBoard.insertAdjacentHTML('afterend', displayMessageBoardTag);
+					}
+
+				}
+			})
 		}
 	}
 })

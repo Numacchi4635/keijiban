@@ -12,19 +12,26 @@
 
 		<!-- Vueインスタンス -->
 		<script src="/views/js/messagecreate.js" defer></script>
+
+		<!-- 戻りボタン制御 -->
+		<script src="/views/js/modoru.js" defer></script>
 	</head>
 	<body>
 		<div id="app">
 			<h1>{{ title }}</h1>
 
-			<p>宛先：<input type="text" name='productName' v-model="productName" v-bind:class="{'alert-color': !validate }" value='' size="40"></p>
+			<p>宛先：<input type="text" name='productName' v-model="productName" value='' size="40"></p>
 			<p>メッセージ：<input type="text" name='productMessage' v-model="productMessage" value='' size="40"></p>
 			<!-- 送信ボタン -->
 			<button v-on:click="doAddProduct">
 				送信
 			</button>
 
-			<ul id="messageboardinfo"></ul>
+			<div v-show="isButton">
+				<p><button type="button" onclick="window.open('./2021autmnmessage.html')">2021年秋のメッセージボードへ</button></p>
+				<p><button type="button" onclick="window.open('./2022wintermessage.html')">2022年冬のメッセージボードへ</button></p>
+			</div>
 		</div>
+		<p><input type="button" value="掲示板一覧へ戻る" id="modoru"><p>
 	</body>
 </html>
