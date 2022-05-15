@@ -19,7 +19,9 @@ new Vue({
 		// 環境変数情報
 		pulbic_mode: '',
 		// true:入力済・false:未入力
-		isEntered: false
+		isEntered: false,
+		// タイトル
+		title: '',
 	},
 
 	// 算出プロパティ
@@ -62,15 +64,11 @@ new Vue({
 					this.products = resultProducts
 
 					// 取得した環境変数ごとに、タイトルを変更
-					let displayTitleTag;
 					if (resultProducts.PublicMode == 'public'){
-						displayTitleTag = '<h1>パスワード認証付き掲示板</h1>'
+						this.title = 'パスワード認証付き掲示板'
 					} else {
-						displayTitleTag = '<h1>🐹🍎ゆゆこ🍎🐹ファミリーボード返信掲示板</h1>'
+						this.title = '🐹🍎ゆゆこ🍎🐹ファミリーボード返信掲示板'
 					}
-					// タイトル表示
-					let element = document.getElementById('titleinfo');
-					element.insertAdjacentHTML('afterend',  displayTitleTag);
 				}
 			})
 		},

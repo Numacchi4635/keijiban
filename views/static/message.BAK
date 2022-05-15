@@ -29,8 +29,8 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td class="name">{{ productName }}</td>
-						<td class="message">{{ productMessage }}</td>
+						<td class="name">あいうえお</td>
+						<td class="message">かきくけこ</td>
 					</tr>
 				</tbody>
 			</table>

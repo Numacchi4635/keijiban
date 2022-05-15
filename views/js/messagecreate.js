@@ -9,7 +9,9 @@ new Vue({
 		// メッセージ
 		productMessage: '',
 		// PUBLIC_MODE(サーバー側の環境変数)
-		PublicMode: ''
+		PublicMode: '',
+		// タイトル
+		title: '',
 	}, 
 
 	// インスタンス作成時の処理
@@ -46,16 +48,12 @@ new Vue({
 						var resultResponse = response.data
 
 						// 取得した環境変数毎にタイトル変更
-						let displayTitleTag;
 						if (resultResponse.PublicMode == 'public'){
-							displayTitleTag = '<h1>管理者専用メッセージ投稿ページ</h1>'
+							this.title = '管理者専用メッセージ投稿ページ'
 						} else {
-							displayTitleTag = '<h1>🐹🍎ゆゆこ🍎🐹専用メッセージ投稿ページ</h1>'
+							this.title = '🐹🍎ゆゆこ🍎🐹専用メッセージ投稿ページ'
 						}
-
-						// タイトル表示
-						let element = document.getElementById('titleinfo');
-						element.insertAdjacentHTML('afterend',  displayTitleTag);
+console.log(this.title)
 
 						// 環境変数privateの時のみ、メッセージボードの内容へのリンクを表示
 						if (resultResponse.PublicMode == 'private'){
