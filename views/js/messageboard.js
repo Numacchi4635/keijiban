@@ -25,6 +25,7 @@ new Vue({
 	// メソッド定義
 	methods: {
 		MessageBoardOpen() {
+console.log(this.isMessageBoard)
 			let InputPassword = prompt('管理者専用パスワードを入力してください');
 
 			// サーバーにパスワードが一致しているか問い合わせる
@@ -37,16 +38,13 @@ new Vue({
 console.log('パスワード一致')
 					this.isMessageBoard = true;
 					this.isErrorMessage = false;
-				} else if ( response.status === 401) {
+				} else {
 console.log('パスワード不一致')
 					// パスワードが一致していない場合はエラー表示する
 					this.ErrorMessage = 'パスワードが一致していないので当ページは表示できません'
 					this.isMessageBoard = false;
 					this.isErrorMessage = true;
 console.log(this.ErrorMessage)
-				} else {
-					// 上記以外のエラーの場合
-					throw new Error('fetchProduct Response Error')
 				}
 			})
 		}
