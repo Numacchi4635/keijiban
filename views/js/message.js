@@ -5,6 +5,7 @@ var app = new Vue({
 		productID: '',
 		productName: '',
 		productMessage: '',
+		ProductPassword: '',
 	},
 	// インスタンス作成時の処理
 	created: function(){
@@ -13,6 +14,9 @@ var app = new Vue({
 
 	methods: {
 		GetProductData(){
+			// パスワード入力
+			let password = prompt('パスワードを入力してください');
+
 
 			// URLパラメータ取得
 			let url = new URL(window.location.href);
@@ -21,12 +25,16 @@ var app = new Vue({
 
 			axios.get('/fetchProduct', {
 				params: {
-					productID: Id
+					productID: Id,
+					productPassword: password
 				}
 			})
 			.then(response => {
 				if (response.status != 200) {
 					throw new Error('fetchProduct Response Error')
+				} else if (response.status == 401) {
+					// パスワードが一致していない場合は、エラー画面へ
+					location.assign('./error.html');
 				} else {
 					var resultProducts = response.data
 

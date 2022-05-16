@@ -63,9 +63,24 @@ func FindProduct(c *gin.Context) {
 		return
 	}
 
+	productPassword := c.Query("productPassword")
+	if err != nil {
+		c.JSON(http.StatusBadRequest, nil)
+		return
+	}
+fmt.Println("productPassword = ", productPassword)
+
 	resultProduct, err := db.FindProduct(productID)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, nil)
+		return
+	}
+fmt.Println("resultProduct.Password = ", resultProduct.Password)
+
+	// 入力パスワードが違う場合
+	if resultProduct.Password != productPassword {
+fmt.Println("Password 不一致")
+		c.JSON(http.StatusUnauthorized, nil)
 		return
 	}
 
@@ -135,7 +150,7 @@ func UserPasswordCollation(c *gin.Context) {
 	if InputPassword == resultFindProduct.Password {
 		c.JSON(http.StatusOK, resultFindProduct)
 	} else {
-		c.JSON(http.StatusUnauthorized, resultFindProduct)
+		c.JSON(http.StatusUnauthorized, nil)
 	}
 }
 

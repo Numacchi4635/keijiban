@@ -22,6 +22,10 @@ new Vue({
 		isEntered: false,
 		// タイトル
 		title: '',
+		// 管理者パスワード不一致時のエラー表示
+		ErrorMessage: '',
+		// openSuperUserPassword Staus
+		OpenSuperUserPasswordStatus: '',
 	},
 
 	// 算出プロパティ
@@ -46,7 +50,18 @@ new Vue({
 
 	// インスタンス作成時の処理
 	created: function() {
-		this.doFetchAllProducts()
+		// 管理者パスワード認証
+		this.openSuperUserPassword()
+console.log(this.OpenSuperUserPasswordStatus)
+		if ( this.OpenSuperUserPasswordStatus === 200 ) {
+			// 管理者パスワードが一致している場合は掲示板内容表示
+			this.doFetchAllProducts()
+		} else if ( this.OpenSuperUserPasswordStatus === 401 ) {
+			this.ErrorMessage = "管理者パスワードが一致していません"
+		} else {
+			// 上記以外のエラーの場合
+			throw new Error('openSuperUserPassword Response Error')
+		}
 	},
 
 	// メソッド定義
@@ -158,21 +173,45 @@ new Vue({
 			// サーバーにパスワードが一致しているか問い合わせる
 			const params = new URLSearchParams()
 			params.append('superUserPassword', password)
+
+			let rtn
+
 			axios.post('/superUserPasswordCollation', params)
 			.then(response => {
-				if (response.status == 200) {
-					// パスワードが一致している場合はmessagecreate.htmlへ
-					let url = './messagecreate.html';
-					location.href = url;
-				} else if ( response.status == 401) {
-					// パスワードが一致していない場合はエラーページへ
-					let url = './superusererror.html';
-					location.href = url;
-				} else {
-					// 上記以外のエラーの場合
-					throw new Error('fetchProduct Response Error')
-				}
+				rtn = response.status;
+//				if (response.status == 200) {
+//					// パスワードが一致している場合はmessagecreate.htmlへ
+//					return 
+//				} else if ( response.status == 401) {
+//					// パスワードが一致していない場合はエラーページへ
+//					let url = './superusererror.html';
+//					location.href = url;
+//				} else {
+//					// 上記以外のエラーの場合
+//					throw new Error('fetchProduct Response Error')
+//				}
 			})
+console.log(rtn)
+			return rtn;
+
+		},
+		// メッセージ表示ページへ移動する処理
+		openMessagePage(ID) {
+			// 一致している場合は、メッセージ表示画面へ
+			let baseurl = './message.html';
+
+			// パラメータ付きURL作成
+			let urlParameter = {
+				id: ID
+			};
+			let newurl = baseurl + "?" + 
+				Object.entries(urlParameter).map((e) => {
+					let key = e[0];
+					let value = encodeURI(e[1]);
+					return `${key}=${value}`;
+				}).join("&");
+			location.href = newurl;
+
 		},
 		// パスワード処理
 		openPasswordPage(item) {

@@ -17,8 +17,9 @@
 	</head>
 	<body>
 		<div id="app">
+			<p>{{ ErrorMessage }}</p>
 			<h1>{{ title }}</h1>
-			<button id="messagebutton" v-on:click="openSuperUserPassword()">メッセージ作成ページへ</button>
+			<button type="button" onclick="location.href='./messagecreate.html'">メッセージ作成ページへ</button>
 			<hr>
 			<table>
 				<!-- テーブルヘッダ -->
@@ -26,6 +27,7 @@
 					<tr>
 						<th class="index">ID</th>
 						<th class="name">宛先</th>
+						<th class="message">メッセージ</th>
 						<th class="etsuran">閲覧</th>
 						<th class="delete">削除</th>
 					</tr>
@@ -34,9 +36,10 @@
 					<tr v-for="(item, index) in computedProducts">
 						<td class="index">{{ item.ID }}</td>
 						<td class="name">{{ item.Name }}</td>
+						<td class="message">{{ item.Message }}</td>
 						<td class="etsuran">
 							<!-- 閲覧ボタン -->
-							<button id="button1" v-on:click="openPasswordPage(item)">
+							<button type="button" v-on:click="openMessagePage(item.ID)">
 								閲覧
 							</button>
 						</td>
