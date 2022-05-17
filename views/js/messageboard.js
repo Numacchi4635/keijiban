@@ -29,9 +29,11 @@ console.log(this.isMessageBoard)
 			let InputPassword = prompt('管理者専用パスワードを入力してください');
 
 			// サーバーにパスワードが一致しているか問い合わせる
-			const params = new URLSearchParams()
-			params.append('superUserPassword', InputPassword)
-			axios.post('/superUserPasswordCollation', params)
+			axios.get('/superUserPasswordCollation', {
+ 				params: {
+					productPassword: InputPassword
+				}
+			})
 			.then(response => {
 				if ( response.status === 200 ){
 					// パスワードが一致している場合はページを表示

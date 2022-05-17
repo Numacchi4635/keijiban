@@ -1,6 +1,9 @@
 package controller
 
 import ( 
+	// Debug用
+	"fmt"
+
 	// http
 	"net/http"
 
@@ -39,16 +42,21 @@ func AddSuperUser(c *gin.Context) {
 }
 
 func SuperUserPasswordCollation(c *gin.Context) {
-	InputPassword := c.PostForm("superUserPassword")
+fmt.Println("SuperUserPasswordCollation")
+	InputPassword := c.Query("productPassword")
+fmt.Println(InputPassword)
 
 	resultSuperUser := db.FindSuperUser()
 	if resultSuperUser == nil {
+fmt.Println(resultSuperUser)
 		c.JSON(http.StatusInternalServerError, nil)
 	}
 
 	if InputPassword == resultSuperUser[0].Password {
+fmt.Println("パスワード一致")
 		c.JSON(http.StatusOK, resultSuperUser)
 	} else {
-		c.JSON(http.StatusUnauthorized, resultSuperUser)
+fmt.Println("パスワード不一致")
+		c.JSON(http.StatusUnauthorized, nil)
 	}
 }

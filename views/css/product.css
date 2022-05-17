@@ -30,8 +30,8 @@ th.index, td.index {
 th.name, td.name {
 	width: 100px;
 }
-th.password, td.password {
-	width: 900px;
+th.message, td.message {
+	width: 300px;
 }
 th.etsuran, td.etsuran {
 	width: 70px;

@@ -73,7 +73,7 @@ for _, fileInfo := range fileInfos {
 	router.GET("/responseServerEnv", controller.ResponseServerEnv)
 
 	// 管理者パスワードの照合を行う
-	router.POST("/superUserPasswordCollation", controller.SuperUserPasswordCollation);
+	router.GET("/superUserPasswordCollation", controller.SuperUserPasswordCollation);
 
 	// 掲示板情報をDBへ登録する
 	router.POST("/addProduct", controller.AddProduct)

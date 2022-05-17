@@ -18,7 +18,7 @@ new Vue({
 
 	// インスタンス作成時の処理
 	created: function() {
-		this.responseServerEnv()
+		this.openSuperUserPassword()
 	},
 
 	// メソッド定義
@@ -62,14 +62,29 @@ new Vue({
 
 						// メッセージリンクボタン表示をtrueにする
 						this.isButton = true;
-
-						// メッセージボードへのリンクボタンタグ設定
-//						let displayMessageBoardTag = '<p><button type="button" onclick="window.open(\'./2021autmnmessage.html\')">2021年秋のメッセージボードへ</button></p><p><button type="button" onclick="window.open(\'./2022wintermessage.html\')">2022年冬のメッセージボードへ</button></p>'
-						// メッセージボード表示
-//						let messageBoard = document.getElementById('messageboardinfo');
-//						messageBoard.insertAdjacentHTML('afterend', displayMessageBoardTag);
 					}
+				}
+			})
+		},
+		// 管理者専用パスワード処理
+		openSuperUserPassword() {
+			let password = prompt('管理者専用パスワードを入力してください');
 
+			axios.get('/superUserPasswordCollation', {
+ 				params: {
+					productPassword: password
+				}
+			})
+			.then(response => {
+				if ( response.status == 200 ){
+					// パスワードが一致している場合のみ、当ページの内容表示
+					this.responseServerEnv()
+				} else if ( response.status == 401) {
+					// パスワードが一致していない場合はエラーページへ
+					this.ErrorMessage = '管理者パスワードが一致していません';
+				} else {
+					// 上記以外のエラーの場合
+					throw new Error('fetchProduct Response Error')
 				}
 			})
 		}

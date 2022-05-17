@@ -24,8 +24,6 @@ new Vue({
 		title: '',
 		// 管理者パスワード不一致時のエラー表示
 		ErrorMessage: '',
-		// openSuperUserPassword Staus
-		OpenSuperUserPasswordStatus: '',
 	},
 
 	// 算出プロパティ
@@ -52,16 +50,6 @@ new Vue({
 	created: function() {
 		// 管理者パスワード認証
 		this.openSuperUserPassword()
-console.log(this.OpenSuperUserPasswordStatus)
-		if ( this.OpenSuperUserPasswordStatus === 200 ) {
-			// 管理者パスワードが一致している場合は掲示板内容表示
-			this.doFetchAllProducts()
-		} else if ( this.OpenSuperUserPasswordStatus === 401 ) {
-			this.ErrorMessage = "管理者パスワードが一致していません"
-		} else {
-			// 上記以外のエラーの場合
-			throw new Error('openSuperUserPassword Response Error')
-		}
 	},
 
 	// メソッド定義
@@ -170,30 +158,24 @@ console.log(this.OpenSuperUserPasswordStatus)
 		openSuperUserPassword() {
 			let password = prompt('管理者専用パスワードを入力してください');
 
-			// サーバーにパスワードが一致しているか問い合わせる
-			const params = new URLSearchParams()
-			params.append('superUserPassword', password)
-
-			let rtn
-
-			axios.post('/superUserPasswordCollation', params)
-			.then(response => {
-				rtn = response.status;
-//				if (response.status == 200) {
-//					// パスワードが一致している場合はmessagecreate.htmlへ
-//					return 
-//				} else if ( response.status == 401) {
-//					// パスワードが一致していない場合はエラーページへ
-//					let url = './superusererror.html';
-//					location.href = url;
-//				} else {
-//					// 上記以外のエラーの場合
-//					throw new Error('fetchProduct Response Error')
-//				}
+			axios.get('/superUserPasswordCollation', {
+ 				params: {
+					productPassword: password
+				}
 			})
-console.log(rtn)
-			return rtn;
+			.then(response => {
+				if ( response.status == 200 ){
+					// パスワードが一致している場合は掲示板内容表示
+					this.doFetchAllProducts()
 
+				} else if ( response.status == 401) {
+					// パスワードが一致していない場合はエラーページへ
+					this.ErrorMessage = '管理者パスワードが一致していません';
+				} else {
+					// 上記以外のエラーの場合
+					throw new Error('fetchProduct Response Error')
+				}
+			})
 		},
 		// メッセージ表示ページへ移動する処理
 		openMessagePage(ID) {

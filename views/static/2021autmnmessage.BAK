@@ -18,7 +18,7 @@
 	</head>
 	<body>
 		<div id="app">
-			<div v-show="isMessageBoard">
+			<div v-if="isMessageBoard">
 				<header>
 					<h1>
 						<img src="/views/image/2021Autumn/2021Autumn_Title.png">
