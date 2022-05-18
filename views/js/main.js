@@ -136,7 +136,8 @@ new Vue({
 						params.append('productID', ID)
 
 						axios.post('/deleteProduct', params).then(response => {
-							if (response.status != 200) {
+console.log(response.status)
+							if (response.status != 204) {
 								throw new Error('deleteProduct Response Error')
 							} else {
 								// 削除成功時は、index.htmlを更新する

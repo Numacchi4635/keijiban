@@ -133,7 +133,13 @@ func DeleteProduct(c *gin.Context) {
 		return
 	}
 
-	db.DeleteProduct(productID)
+	err = db.DeleteProduct(productID)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, nil)
+	}
+
+	// 削除成功時はStatusNoContent(204)を返す
+	c.JSON(http.StatusNoContent, nil)
 }
 
 // パスワード照合
