@@ -14,6 +14,8 @@ new Vue({
 		title: '',
 		// メッセージボードリンクボタン true:表示／false非表示
 		isButton: false,
+		// 画面表示フラグ true:表示／false非表示
+		isDisplay: false,
 	}, 
 
 	// インスタンス作成時の処理
@@ -70,6 +72,12 @@ new Vue({
 		openSuperUserPassword() {
 			let password = prompt('管理者専用パスワードを入力してください');
 
+			// キャンセルボタン押下時はエラーページへ
+			if (password == null){
+				let url = './superusererror.html';
+				location.href = url;
+			}
+
 			axios.get('/superUserPasswordCollation', {
  				params: {
 					productPassword: password
@@ -78,10 +86,16 @@ new Vue({
 			.then(response => {
 				if ( response.status == 200 ){
 					// パスワードが一致している場合のみ、当ページの内容表示
+					this.isDisplay = true
 					this.responseServerEnv()
-				} else if ( response.status == 401) {
+				}
+			})
+			.catch(function(error){
+				if ( error.response.status == 401) {
 					// パスワードが一致していない場合はエラーページへ
-					this.ErrorMessage = '管理者パスワードが一致していません';
+					this.isDisplay = false
+					let url = './superusererror.html';
+					location.href = url;
 				} else {
 					// 上記以外のエラーの場合
 					throw new Error('fetchProduct Response Error')

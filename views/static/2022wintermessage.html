@@ -15,7 +15,7 @@
 	</head>
 	<body>
 		<div id="app">
-			<div v-if="isMessageBoard">
+			<div v-show="isMessageBoard">
 				<header>
 					<h1>
 						<img src="/views/image/2022Winter/2022Winter_Title.png">
@@ -33,9 +33,6 @@
 				<p><img src="/views/image/2022Winter/2022Winter17.png"> <img src="/views/image/2022Winter/2022Winter18.png"></p>
 				<p><img src="/views/image/2022Winter/2022Winter19.png"> <img src="/views/image/2022Winter/2022Winter20.png"></p>
 				<p><img src="/views/image/2022Winter/2022Winter21.png"></p>
-			</div>
-			<div v-else="isErrorMessage">
-				<p>{{ ErrorMessage }}</p>
 			</div>
 		</div>
 

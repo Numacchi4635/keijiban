@@ -32,7 +32,7 @@
 				<p><img src="/views/image/2021Autumn/2021Autumn11.png"> <img src="/views/image/2021Autumn/2021Autumn12.png"></p>
 				<p><img src="/views/image/2021Autumn/2021Autumn13.png"></p>
 			</div>
-			<div v-show="isErrorMessage">
+			<div v-else="isErrorMessage">
 				<p>{{ ErrorMessage }}</p>
 			</div>
 		</div>

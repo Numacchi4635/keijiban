@@ -22,8 +22,8 @@ new Vue({
 		isEntered: false,
 		// タイトル
 		title: '',
-		// 管理者パスワード不一致時のエラー表示
-		ErrorMessage: '',
+		// true:掲示板表示・false：掲示板非表示
+		isKeijibanDisplay: false,
 	},
 
 	// 算出プロパティ
@@ -120,11 +120,12 @@ new Vue({
 			let password = prompt('管理者専用パスワードを入力してください');
 
 			if ( password != null ){
-				// サーバーにパスワードが一致しているか問い合わせる
-				const superuserparams = new URLSearchParams()
-				superuserparams.append('superUserPassword', password)
 
-				axios.post('/superUserPasswordCollation', superuserparams)
+				axios.get('/superUserPasswordCollation', {
+ 					params: {
+						productPassword: password
+					}
+				})
 				.then(response => {
 
 					// パスワードが一致している場合は削除を行う
@@ -134,8 +135,7 @@ new Vue({
 						const params = new URLSearchParams()
 						params.append('productID', ID)
 
-						axios.post('/deleteProduct', params)
-							.then(response => {
+						axios.post('/deleteProduct', params).then(response => {
 							if (response.status != 200) {
 								throw new Error('deleteProduct Response Error')
 							} else {
@@ -143,7 +143,10 @@ new Vue({
 								location.reload();
 							}
 						})
-					} else if ( response.status == 401 ){
+					}
+				})
+				.catch(function(error){
+					if ( error.response.status == 401 ){
 						// パスワードが一致していない場合はエラーページへ
 						let url = './superusererror.html';
 						location.href = url;
@@ -158,6 +161,13 @@ new Vue({
 		openSuperUserPassword() {
 			let password = prompt('管理者専用パスワードを入力してください');
 
+			// パスワード未入力時はエラーページへ
+			if (password == null){
+				this.isKeijibanDisplay = false
+				let url = './superusererror.html';
+				location.href = url;
+			}
+
 			axios.get('/superUserPasswordCollation', {
  				params: {
 					productPassword: password
@@ -166,11 +176,16 @@ new Vue({
 			.then(response => {
 				if ( response.status == 200 ){
 					// パスワードが一致している場合は掲示板内容表示
+					this.isKeijibanDisplay = true
 					this.doFetchAllProducts()
-
-				} else if ( response.status == 401) {
+				}
+			})
+			.catch(function (error) {
+				if ( error.response.status == 401) {
 					// パスワードが一致していない場合はエラーページへ
-					this.ErrorMessage = '管理者パスワードが一致していません';
+					this.isKeijibanDisplay = false
+					let url = './superusererror.html';
+					location.href = url;
 				} else {
 					// 上記以外のエラーの場合
 					throw new Error('fetchProduct Response Error')

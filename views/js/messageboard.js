@@ -13,8 +13,6 @@ new Vue({
 		// メッセージボード true:表示／false:非表示
 		isMessageBoard: false,
 
-		// エラーメッセージ true:表示／false:非表示
-		isErrorMessage: true,
 	},
 
 	// インスタンス作成時の処理
@@ -25,8 +23,14 @@ new Vue({
 	// メソッド定義
 	methods: {
 		MessageBoardOpen() {
-console.log(this.isMessageBoard)
 			let InputPassword = prompt('管理者専用パスワードを入力してください');
+
+			// キャンセルボタン押下時はエラーページへ
+			if (InputPassword == null){
+				this.isMessageBoard = false;
+				let url = './superusererror.html';
+				location.href = url;
+			}
 
 			// サーバーにパスワードが一致しているか問い合わせる
 			axios.get('/superUserPasswordCollation', {
@@ -37,16 +41,15 @@ console.log(this.isMessageBoard)
 			.then(response => {
 				if ( response.status === 200 ){
 					// パスワードが一致している場合はページを表示
-console.log('パスワード一致')
 					this.isMessageBoard = true;
-					this.isErrorMessage = false;
-				} else {
-console.log('パスワード不一致')
-					// パスワードが一致していない場合はエラー表示する
-					this.ErrorMessage = 'パスワードが一致していないので当ページは表示できません'
+				}
+			})
+			.catch( function(error) { 
+				if ( error.response.status === 401 ){
+					// パスワード不一致時はエラーページへ
 					this.isMessageBoard = false;
-					this.isErrorMessage = true;
-console.log(this.ErrorMessage)
+					let url = './superusererror.html';
+					location.href = url;
 				}
 			})
 		}
