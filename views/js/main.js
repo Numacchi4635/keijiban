@@ -36,7 +36,8 @@ new Vue({
 		},
 		// 表示対象の掲示板情報を返却する
 		computedProducts() {
-			return this.products.Products
+console.log(this.products.products)
+			return this.products.products
 		},
 		// 入力チェック
 		validate() {
@@ -62,12 +63,17 @@ new Vue({
 					throw new Error('fetchAllProducts Response Error')
 				} else {
 					var resultProducts = response.data
+console.log(response)
+console.log(response.data)
+console.log(resultProducts)
+console.log(resultProducts.publicMode)
 
 					// サーバから取得した掲示板情報をdataに設定する
 					this.products = resultProducts
 
+
 					// 取得した環境変数ごとに、タイトルを変更
-					if (resultProducts.PublicMode == 'public'){
+					if (resultProducts.publicMode == 'public'){
 						this.title = 'パスワード認証付き掲示板'
 					} else {
 						this.title = '🐹🍎ゆゆこ🍎🐹ファミリーボード返信掲示板'

@@ -43,14 +43,14 @@ func FetchAllProducts(c *gin.Context) {
 	// 環境変数publicMode取得
 	publicMode :=  os.Getenv("publicMode")
 
-	resultresponse := resultResponse {
+	resultResponse := resultResponse {
 		products:	resultProducts,
 		publicMode:	publicMode,
 	}
-
+fmt.Println(resultResponse)
 
 	// URLへのアクセスに対してJSONを返す
-	c.JSON(http.StatusOK, resultresponse)
+	c.JSON(http.StatusOK, resultResponse)
 }
 
 // FindProduct は 指定したIDの掲示板情報を取得する
