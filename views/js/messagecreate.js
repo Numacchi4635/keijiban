@@ -8,7 +8,7 @@ new Vue({
 		productName: '',
 		// メッセージ
 		productMessage: '',
-		// PUBLIC_MODE(サーバー側の環境変数)
+		// publicMode(サーバー側の環境変数)
 		PublicMode: '',
 		// タイトル
 		title: '',

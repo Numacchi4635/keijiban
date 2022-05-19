@@ -14,8 +14,8 @@
 	</body>
 		<div id="app">
 			<h1>管理者パスワード設定・変更ページ</h1>
-			<p>UserID:<input type="text" name='superUserID' v-model="superUserID" size=40></p>
-			<p>Password:<input type="password" id="superUserPassword" name='superUserPassword' v-model="superUserPassword" size=40><button id="btn_passview">表示</button></p>
+			<p>UserID:<input type="text" name='UserID' v-model="UserID" size=40></p>
+			<p>Password:<input type="password" id="Password" name='Password' v-model="Password" size=40><button id="btn_passview">表示</button></p>
 			<!-- 送信ボタン -->
 			<button v-on:click="doUpdateSuperUser">
 				送信

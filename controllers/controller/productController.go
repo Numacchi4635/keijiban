@@ -26,10 +26,10 @@ import (
 	db "github.com/Numacchi4635/keijiban/models/db"
 )
 
-// 環境変数PUBLIC_MODEを含む返信用struct
+// 環境変数publicModeを含む返信用struct
 type resultResponse struct {
-	Products	[]entity.Product
-	PublicMode	string
+	products	[]entity.Product
+	publicMode	string
 }
 
 // FetchAllProducts は 全ての掲示板情報を取得する
@@ -40,12 +40,12 @@ func FetchAllProducts(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, nil)
 	}
 
-	// 環境変数PUBLIC_MODE取得
-	PublicMode :=  os.Getenv("PUBLIC_MODE")
+	// 環境変数publicMode取得
+	publicMode :=  os.Getenv("publicMode")
 
 	resultresponse := resultResponse {
-		Products:	resultProducts,
-		PublicMode:	PublicMode,
+		products:	resultProducts,
+		publicMode:	publicMode,
 	}
 
 
@@ -68,18 +68,15 @@ func FindProduct(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, nil)
 		return
 	}
-fmt.Println("productPassword = ", productPassword)
 
 	resultProduct, err := db.FindProduct(productID)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, nil)
 		return
 	}
-fmt.Println("resultProduct.Password = ", resultProduct.Password)
 
 	// 入力パスワードが違う場合
 	if resultProduct.Password != productPassword {
-fmt.Println("Password 不一致")
 		c.JSON(http.StatusUnauthorized, nil)
 		return
 	}
@@ -163,10 +160,10 @@ func UserPasswordCollation(c *gin.Context) {
 // 環境変数を返す
 func ResponseServerEnv(c *gin.Context) {
 	// 環境変数PUBLIC_MODE取得
-	PublicMode :=  os.Getenv("PUBLIC_MODE")
+	publicMode :=  os.Getenv("publicMode")
 
 	resultresponse := resultResponse {
-		PublicMode:	PublicMode,
+		publicMode:	publicMode,
 	}
 
 	// URLへのアクセスに対してJSONを返す

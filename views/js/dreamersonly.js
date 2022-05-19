@@ -32,11 +32,11 @@ new Vue({
 	// data オブジェクトの定義
 	data: {
 		// Super User ID
-		UserID: '',
+		superUserID: '',
 		// Super User Password
-		Password: '',
+		superUserPassword: '',
 		// Display Message
-		DisplayMessage: ''
+		displayMessage: ''
 	},
 
 	// メソッド定義
@@ -44,15 +44,15 @@ new Vue({
 		doUpdateSuperUser() {
 			// サーバへ送信するパラメータ
 			const params = new URLSearchParams();
-			params.append('UserID', this.UserID);
-			params.append('Password', this.Password);
+			params.append('superUserID', this.superUserID);
+			params.append('superUserPassword', this.superUassword);
 
 			axios.post('/InsertSuperUserPassword', params)
 			.then(response => {
 				if (response.status != 200) {
-					this.DisplayMessage = '管理者情報の更新に失敗しました'
+					this.displayMessage = '管理者情報の更新に失敗しました'
 				} else {
-					this.DisplayMessage = '管理者情報の更新に成功しました'
+					this.displayMessage = '管理者情報の更新に成功しました'
 				}
 			})
 		}
