@@ -66,8 +66,9 @@ new Vue({
 					// サーバから取得した掲示板情報をdataに設定する
 					this.products = resultProducts
 
+
 					// 取得した環境変数ごとに、タイトルを変更
-					if (resultProducts.PublicMode == 'public'){
+					if (resultProducts.publicMode == 'public'){
 						this.title = 'パスワード認証付き掲示板'
 					} else {
 						this.title = '🐹🍎ゆゆこ🍎🐹ファミリーボード返信掲示板'
@@ -136,7 +137,6 @@ new Vue({
 						params.append('productID', ID)
 
 						axios.post('/deleteProduct', params).then(response => {
-console.log(response.status)
 							if (response.status != 204) {
 								throw new Error('deleteProduct Response Error')
 							} else {
@@ -196,19 +196,19 @@ console.log(response.status)
 		// メッセージ表示ページへ移動する処理
 		openMessagePage(ID) {
 			// 一致している場合は、メッセージ表示画面へ
-			let baseurl = './message.html';
+			let baseUrl = './message.html';
 
 			// パラメータ付きURL作成
 			let urlParameter = {
 				id: ID
 			};
-			let newurl = baseurl + "?" + 
+			let newUrl = baseUrl + "?" + 
 				Object.entries(urlParameter).map((e) => {
 					let key = e[0];
 					let value = encodeURI(e[1]);
 					return `${key}=${value}`;
 				}).join("&");
-			location.href = newurl;
+			location.href = newUrl;
 
 		},
 		// パスワード処理
@@ -228,18 +228,18 @@ console.log(response.status)
 					if ( response.status == 200 ) {
 
 						// 一致している場合は、メッセージ表示画面へ
-						let baseurl = './message.html';
+						let baseUrl = './message.html';
 						// パラメータ付きURL作成
 						let urlParameter = {
 							id: item.ID
 						};
-						let newurl = baseurl + "?" + 
+						let newUrl = baseUrl + "?" + 
 							Object.entries(urlParameter).map((e) => {
 									let key = e[0];
 									let value = encodeURI(e[1]);
 									return `${key}=${value}`;
 								}).join("&");
-						location.href = newurl;
+						location.href = newUrl;
 					} else if (response.status == 401){
 
 						// パスワードが一致していない場合は、エラー画面へ

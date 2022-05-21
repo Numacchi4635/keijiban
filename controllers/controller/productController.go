@@ -28,76 +28,76 @@ import (
 
 // 環境変数publicModeを含む返信用struct
 type resultResponse struct {
-	products	[]entity.Product
-	publicMode	string
+	Products	[]entity.Product
+	PublicMode	string
 }
 
 // FetchAllProducts は 全ての掲示板情報を取得する
 func FetchAllProducts(c *gin.Context) {
 
-	resultProducts := db.FindAllProducts()
-	if resultProducts == nil {
+	ResultProducts := db.FindAllProducts()
+	if ResultProducts == nil {
 		c.JSON(http.StatusBadRequest, nil)
 	}
 
 	// 環境変数publicMode取得
-	publicMode :=  os.Getenv("publicMode")
+	PublicMode :=  os.Getenv("PUBLIC_MODE")
 
-	resultresponse := resultResponse {
-		products:	resultProducts,
-		publicMode:	publicMode,
+	ResultResponse := resultResponse {
+		Products:	ResultProducts,
+		PublicMode:	PublicMode,
 	}
 
-
 	// URLへのアクセスに対してJSONを返す
-	c.JSON(http.StatusOK, resultresponse)
+	c.JSON(http.StatusOK, ResultResponse)
 }
 
 // FindProduct は 指定したIDの掲示板情報を取得する
 func FindProduct(c *gin.Context) {
-	productIDStr := c.Query("productID")
+	ProductIDStr := c.Query("productID")
 
-	productID, err := strconv.Atoi(productIDStr)
+	ProductID, err := strconv.Atoi(ProductIDStr)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, nil)
 		return
 	}
 
-	productPassword := c.Query("productPassword")
+	ProductPassword := c.Query("productPassword")
 	if err != nil {
 		c.JSON(http.StatusBadRequest, nil)
 		return
 	}
 
-	resultProduct, err := db.FindProduct(productID)
+	ResultProduct, err := db.FindProduct(ProductID)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, nil)
 		return
 	}
 
 	// 入力パスワードが違う場合
-	if resultProduct.Password != productPassword {
+	if ResultProduct.Password != ProductPassword {
 		c.JSON(http.StatusUnauthorized, nil)
 		return
 	}
+fmt.Println(ResultProduct)
 
 	// URLへのアクセスに対してJSONを返す
-	c.JSON(http.StatusOK, resultProduct)
+	c.JSON(http.StatusOK, ResultProduct)
 }
 
 // AddProduct は 掲示板情報をDBへ登録する
 func AddProduct(c *gin.Context) {
-	productName := c.PostForm("productName")
-	productMessage := c.PostForm("productMessage")
-	productPassword, _ := MakeRandomStr(128)
+	ProductName := c.PostForm("productName")
+	ProductMessage := c.PostForm("productMessage")
+	ProductPassword, _ := MakeRandomStr(128)
 
-	var product = entity.Product{
-		Name:    productName,
-		Message: productMessage,
-		Password:productPassword,
+	var Product = entity.Product{
+		Name:    ProductName,
+		Message: ProductMessage,
+		Password:ProductPassword,
 	}
 
-	db.InsertProduct(&product)
+	db.InsertProduct(&Product)
 }
 
 // 推測不可能なパスワード生成
@@ -122,15 +122,15 @@ func MakeRandomStr(digit uint32) (string, error){
 
 // DeleteProduct は 掲示板情報をDBから削除する
 func DeleteProduct(c *gin.Context) {
-	productIDStr := c.PostForm("productID")
+	ProductIDStr := c.PostForm("productID")
 
-	productID, err := strconv.Atoi(productIDStr)
+	ProductID, err := strconv.Atoi(ProductIDStr)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, nil)
 		return
 	}
 
-	err = db.DeleteProduct(productID)
+	err = db.DeleteProduct(ProductID)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, nil)
 	}
@@ -147,11 +147,11 @@ func UserPasswordCollation(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, nil)
 		return
 	}
-	InputPassword := c.PostForm("productPassword")
-	resultFindProduct, _ := db.FindProduct(InputID)
+	InputPassword := c.PostForm("ProductPassword")
+	ResultFindProduct, _ := db.FindProduct(InputID)
 
-	if InputPassword == resultFindProduct.Password {
-		c.JSON(http.StatusOK, resultFindProduct)
+	if InputPassword == ResultFindProduct.Password {
+		c.JSON(http.StatusOK, ResultFindProduct)
 	} else {
 		c.JSON(http.StatusUnauthorized, nil)
 	}
@@ -160,12 +160,12 @@ func UserPasswordCollation(c *gin.Context) {
 // 環境変数を返す
 func ResponseServerEnv(c *gin.Context) {
 	// 環境変数PUBLIC_MODE取得
-	publicMode :=  os.Getenv("publicMode")
+	PublicMode :=  os.Getenv("PUBLIC_MODE")
 
-	resultresponse := resultResponse {
-		publicMode:	publicMode,
+	ResultResponse := resultResponse {
+		PublicMode:	PublicMode,
 	}
 
 	// URLへのアクセスに対してJSONを返す
-	c.JSON(http.StatusOK, resultresponse)
+	c.JSON(http.StatusOK, ResultResponse)
 }

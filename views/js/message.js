@@ -30,17 +30,20 @@ var app = new Vue({
 				}
 			})
 			.then(response => {
-				if (response.status != 200) {
-					throw new Error('fetchProduct Response Error')
-				} else if (response.status == 401) {
-					// パスワードが一致していない場合は、エラー画面へ
-					location.assign('./error.html');
-				} else {
+				if (response.status == 200){
 					var resultProducts = response.data
 
 					// 掲示板表示タグ生成
 					this.productName = resultProducts.Name;
 					this.productMessage = resultProducts.Message;
+				}
+			})
+			.catch(function(error){
+				if (error.response.status == 401) {
+					// パスワードが一致していない場合は、エラー画面へ
+					location.assign('./error.html');
+				} else {
+					throw new Error('fetchProduct Response Error')
 				}
 			})
 		},
