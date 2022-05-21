@@ -12,9 +12,6 @@ import (
 	// HTTPを扱うパッケージ
 	"net/http"
 
-	// Go言語のORM
-	"github.com/jinzhu/gorm"
-
 	// Gin
 	"github.com/gin-gonic/gin"
 
@@ -23,18 +20,9 @@ import (
 
 	// コントローラ
 	controller "github.com/Numacchi4635/keijiban/controllers/controller"
-
-	// スーパーユーザー（データベースのテーブルの行に対応）
-	superuser "github.com/Numacchi4635/keijiban/models/superuser"
-
-	// グローバル変数
-	globaldata "github.com/Numacchi4635/keijiban/model/globaldata"
 )
 
 func main() {
-	// プログラム終了時にDBをCloseする
-	defer gorm.Close()
-
 	// サーバーを起動する
 	server()
 }
@@ -109,32 +97,4 @@ for _, fileInfo := range fileInfos {
 			log.Fatal("Server Run Failed.: ", err)
 		}
 	}
-}
-
-// SuperUserTableとDB接続する
-func openSuperUser() (*gorm.DB, error) {
-	DBMS :="mysql"
-	CONNECT := os.Getenv("CONNECT")
-
-	globaldata.SuperUserDb, err := gorm.Open(DBMS, CONNECT)
-
-	if err != nil {
-		fmt.Println(err);
-		return nil, err
-	}
-
-	// DBエンジンを「InnoDB」に設定
-	globaldata.SuperUserDb.Set("gorm:table_options", "ENGINE=InnoDB")
-
-	// 詳細なログを表示
-	globaldata.SuperUserDb.LogMode(true)
-
-	// 登録するテーブル名を単数形にする（デフォルトは複数形）
-	globaldata.SuperUserDb.SingularTable(true)
-
-	// マイグレーション（テーブルが無い時は自動生成）
-	globaldata.SuperUserDb.AutoMigrate(&superuser.SuperUser{})
-
-	fmt.Println("db connected: ", &globaldata.SuperUserDb)
-	return globaldata.SuperUserDb, nil
 }
