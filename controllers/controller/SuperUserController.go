@@ -17,16 +17,6 @@ import (
 // スーパーユーザーのID番号は1固定
 const SuperUserIDNo = 1
 
-func FindSuperUser(c *gin.Context) {
-	resultSuperUser := db.FindSuperUser();
-	if resultSuperUser == nil {
-		c.JSON(http.StatusBadRequest, nil)
-	}
-
-	// URLへのアクセスに対してJSONを返す
-	c.JSON(http.StatusOK, resultSuperUser);
-}
-
 func AddSuperUser(c *gin.Context) {
 	superUserID := c.PostForm("superUserID")
 	superUserPassword := c.PostForm("superUserPassword")
@@ -38,9 +28,8 @@ func AddSuperUser(c *gin.Context) {
 	db.InsertSuperUser(&SuperUser)
 }
 
-func SuperUserPasswordCollation(c *gin.Context) {
+func SuperUserPasswordCollation(c *gin.Context){
 	inputPassword := c.Query("productPassword")
-
 	resultSuperUser := db.FindSuperUser()
 	if resultSuperUser == nil {
 		c.JSON(http.StatusInternalServerError, nil)
@@ -50,5 +39,18 @@ func SuperUserPasswordCollation(c *gin.Context) {
 		c.JSON(http.StatusOK, resultSuperUser)
 	} else {
 		c.JSON(http.StatusUnauthorized, nil)
+	}
+}
+
+func SuperUserPasswordCollationDB(inputPassword string) int{
+	resultSuperUser := db.FindSuperUser()
+	if resultSuperUser == nil {
+		return http.StatusInternalServerError
+	}
+
+	if inputPassword == resultSuperUser[0].Password {
+		return http.StatusOK
+	} else {
+		return http.StatusUnauthorized
 	}
 }

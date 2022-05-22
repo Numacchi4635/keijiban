@@ -2,7 +2,7 @@ window.addEventListener('DOMContentLoaded', function(){
 
 	// パスワード入力欄とボタンのHTMLを取得
 	let btn_passview = document.getElementById('btn_passview');
-	let Password = document.getElementById('Password');
+	let Password = document.getElementById('superUserPassword');
 
 	// ボタンのイベントリスナーを取得
 	btn_passview.addEventListener("click", (e) => {
@@ -36,7 +36,14 @@ new Vue({
 		// Super User Password
 		superUserPassword: '',
 		// Display Message
-		displayMessage: ''
+		displayMessage: '',
+		// 画面表示フラグ true:表示／false非表示
+		isDisplay: false,
+	},
+
+	// インスタンス作成時の処理
+	created: function(){
+		this.openSuperUserPassword()
 	},
 
 	// メソッド定義
@@ -45,7 +52,7 @@ new Vue({
 			// サーバへ送信するパラメータ
 			const params = new URLSearchParams();
 			params.append('superUserID', this.superUserID);
-			params.append('superUserPassword', this.superUassword);
+			params.append('superUserPassword', this.superUserPassword);
 
 			axios.post('/InsertSuperUserPassword', params)
 			.then(response => {
@@ -53,6 +60,39 @@ new Vue({
 					this.displayMessage = '管理者情報の更新に失敗しました'
 				} else {
 					this.displayMessage = '管理者情報の更新に成功しました'
+				}
+			})
+		},
+		// 管理者専用パスワード処理
+		openSuperUserPassword() {
+			inputPassword = prompt('管理者専用パスワードを入力してください');
+
+			// キャンセルボタン押下時はエラーページへ
+			if (inputPassword == null){
+				let url = './superusererror.html';
+				location.href = url;
+			}
+
+			axios.get('/superUserPasswordCollation', {
+ 				params: {
+					productPassword: inputPassword
+				}
+			})
+			.then(response => {
+				if ( response.status == 200 ){
+					// パスワードが一致している場合のみ、当ページの内容表示
+					this.isDisplay = true
+				}
+			})
+			.catch(function(error){
+				if ( error.response.status == 401) {
+					// パスワードが一致していない場合はエラーページへ
+					this.isDisplay = false
+					let url = './superusererror.html';
+					location.href = url;
+				} else {
+					// 上記以外のエラーの場合
+					throw new Error('fetchProduct Response Error')
 				}
 			})
 		}

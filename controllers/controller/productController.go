@@ -35,6 +35,18 @@ type resultResponse struct {
 // FetchAllProducts は 全ての掲示板情報を取得する
 func FetchAllProducts(c *gin.Context) {
 
+	inputPassword := c.Query("productPassword")
+
+	// 管理者パスワード照合
+	rtn := SuperUserPasswordCollationDB(inputPassword)
+	if ( rtn == http.StatusInternalServerError ){
+		fmt.Println("Internal Server Error")
+		c.JSON(http.StatusInternalServerError, nil)
+	} else if (rtn == http.StatusUnauthorized) {
+		fmt.Println("管理者パスワード不一致")
+		c.JSON(http.StatusUnauthorized, nil)
+	}
+
 	ResultProducts := db.FindAllProducts()
 	if ResultProducts == nil {
 		c.JSON(http.StatusBadRequest, nil)
@@ -79,7 +91,6 @@ func FindProduct(c *gin.Context) {
 		c.JSON(http.StatusUnauthorized, nil)
 		return
 	}
-fmt.Println(ResultProduct)
 
 	// URLへのアクセスに対してJSONを返す
 	c.JSON(http.StatusOK, ResultProduct)
@@ -89,6 +100,21 @@ fmt.Println(ResultProduct)
 func AddProduct(c *gin.Context) {
 	ProductName := c.PostForm("productName")
 	ProductMessage := c.PostForm("productMessage")
+	InputPassword := c.PostForm("superUserPassword")
+
+	// 管理者パスワード照合
+	rtn := SuperUserPasswordCollationDB(InputPassword)
+	if ( rtn == http.StatusInternalServerError ){
+		fmt.Println("Internal Server Error")
+		c.JSON(http.StatusInternalServerError, nil)
+	} else if (rtn == http.StatusUnauthorized) {
+		fmt.Println("管理者パスワード不一致")
+		c.JSON(http.StatusUnauthorized, nil)
+	}
+
+	fmt.Println("AddProduct 管理者パスワード一致")
+
+	// 一般ユーザー側のパスワード生成
 	ProductPassword, _ := MakeRandomStr(128)
 
 	var Product = entity.Product{
@@ -123,12 +149,24 @@ func MakeRandomStr(digit uint32) (string, error){
 // DeleteProduct は 掲示板情報をDBから削除する
 func DeleteProduct(c *gin.Context) {
 	ProductIDStr := c.PostForm("productID")
+	inputPassword := c.PostForm("superUserPassword")
 
 	ProductID, err := strconv.Atoi(ProductIDStr)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, nil)
 		return
 	}
+
+	// 管理者パスワード照合
+	rtn := SuperUserPasswordCollationDB(inputPassword)
+	if ( rtn == http.StatusInternalServerError ){
+		fmt.Println("Internal Server Error")
+		c.JSON(http.StatusInternalServerError, nil)
+	} else if (rtn == http.StatusUnauthorized) {
+		fmt.Println("管理者パスワード不一致")
+		c.JSON(http.StatusUnauthorized, nil)
+	}
+
 
 	err = db.DeleteProduct(ProductID)
 	if err != nil {
