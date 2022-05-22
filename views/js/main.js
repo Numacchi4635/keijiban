@@ -48,24 +48,35 @@ new Vue({
 
 	// インスタンス作成時の処理
 	created: function() {
-		// 管理者パスワード認証
-		this.openSuperUserPassword()
+		// 掲示板一覧表示
+		this.doFetchAllProducts()
 	},
 
 	// メソッド定義
 	methods: {
 		// 全ての掲示板情報を取得する
 		doFetchAllProducts() {
-			axios.get('/fetchAllProducts')
+			this.superUserPassword = prompt('管理者専用パスワードを入力してください');
+
+			// パスワード未入力時はエラーページへ
+			if (this.superUserPassword == null){
+				this.isKeijibanDisplay = false
+				let url = './superusererror.html';
+				location.href = url;
+			}
+
+			axios.get('/fetchAllProducts', {
+				params: {
+					productPassword: this.superUserPassword
+				}
+			})
 			.then(response => {
-				if (response.status != 200) {
-					throw new Error('fetchAllProducts Response Error')
-				} else {
+				if (response.status == 200){
+					this.isKeijibanDisplay = true
 					var resultProducts = response.data
 
 					// サーバから取得した掲示板情報をdataに設定する
 					this.products = resultProducts
-
 
 					// 取得した環境変数ごとに、タイトルを変更
 					if (resultProducts.publicMode == 'public'){
@@ -75,123 +86,48 @@ new Vue({
 					}
 				}
 			})
-		},
-		// 1つの掲示板情報を取得する
-		doFetchProduct(ID, Password) {
-			axios.get('/fetchProduct', {
-				params: {
-					productID: ID,
-					productPassword: Password
-				}
-			})
-			.then(response => {
-				if (response.status != 200) {
-					throw new Error('fetchProduct Response Error')
-				} else {
-					var resultProducts = response.data
-
-					// 選択された掲示板情報のインデックスを取得する
-					var index = ID
-				}
-			})
-		},
-		// 掲示板情報を登録する
-		doAddProduct() {
-			// サーバへ送信するパラメータ
-			const params = new URLSearchParams()
-			params.append('productName', this.productName)
-			params.append('productMessage', this.productMessage)
-
-			axios.post('/addProduct', params)
-			.then(response => {
-				if (response.status != 200) {
-					throw new Error('addProduct Response Error')
-				} else {
-					// 掲示板情報を取得する
-					this.doFetchAllProducts()
-
-					// 入力値を初期化する
-					this.initInputValue()
-				}
-			})
-		},
-		// 掲示板情報を削除する
-		doDeleteProduct(ID) {
-			// 管理者用パスワード入力
-			let password = prompt('管理者専用パスワードを入力してください');
-
-			if ( password != null ){
-
-				axios.get('/superUserPasswordCollation', {
- 					params: {
-						productPassword: password
-					}
-				})
-				.then(response => {
-
-					// パスワードが一致している場合は削除を行う
-					if ( response.status == 200 ){
-
-						// サーバへ送信するパラメータ
-						const params = new URLSearchParams()
-						params.append('productID', ID)
-
-						axios.post('/deleteProduct', params).then(response => {
-							if (response.status != 204) {
-								throw new Error('deleteProduct Response Error')
-							} else {
-								// 削除成功時は、index.htmlを更新する
-								location.reload();
-							}
-						})
-					}
-				})
-				.catch(function(error){
-					if ( error.response.status == 401 ){
-						// パスワードが一致していない場合はエラーページへ
-						let url = './superusererror.html';
-						location.href = url;
-					} else {
-						// 上記以外のエラーの場合
-						throw new Error('fetchProduct Response Error')
-					}
-				})
-			}
-		},
-		// 管理者専用パスワード処理
-		openSuperUserPassword() {
-			let password = prompt('管理者専用パスワードを入力してください');
-
-			// パスワード未入力時はエラーページへ
-			if (password == null){
-				this.isKeijibanDisplay = false
-				let url = './superusererror.html';
-				location.href = url;
-			}
-
-			axios.get('/superUserPasswordCollation', {
- 				params: {
-					productPassword: password
-				}
-			})
-			.then(response => {
-				if ( response.status == 200 ){
-					// パスワードが一致している場合は掲示板内容表示
-					this.isKeijibanDisplay = true
-					this.doFetchAllProducts()
-				}
-			})
-			.catch(function (error) {
-				if ( error.response.status == 401) {
+			.catch(function(error){
+				if (error.response.status == 401){
 					// パスワードが一致していない場合はエラーページへ
 					this.isKeijibanDisplay = false
 					let url = './superusererror.html';
 					location.href = url;
 				} else {
-					// 上記以外のエラーの場合
-					throw new Error('fetchProduct Response Error')
-				}
+					throw new Error('fetchAllProducts Response Error')
+				} 
 			})
+		},
+		// 掲示板情報を削除する
+		doDeleteProduct(ID) {
+			// 管理者用パスワード入力
+			this.superUserPassword  = prompt('管理者専用パスワードを入力してください');
+
+			if ( this.superUserPassword != null ){
+
+				// サーバへ送信するパラメータ
+				const params = new URLSearchParams()
+				params.append('productID', ID)
+				params.append('superUserPassword', this.superUserPassword)
+
+				axios.post('/deleteProduct', params).then(response => {
+					if (response.status != 204) {
+						throw new Error('deleteProduct Response Error')
+					} else {
+						// 削除成功時は、index.htmlを更新する
+						location.reload();
+					}
+				})
+				.catch(function(error){
+					if (error.response.status == 401){
+						// パスワードが一致していない場合はエラーページへ
+						let url = './superusererror.html';
+						location.href = url;
+					} else {
+						// 上記以外のエラーの場合
+						throw new Error('deleteProduct Response Error')
+					}
+				})
+			}
 		},
 		// メッセージ表示ページへ移動する処理
 		openMessagePage(ID) {
@@ -210,45 +146,6 @@ new Vue({
 				}).join("&");
 			location.href = newUrl;
 
-		},
-		// パスワード処理
-		openPasswordPage(item) {
-
-			// パスワード入力ダイアログ表示
-			let password = prompt('パスワードを入力してください');
-
-			// パスワードを照合する
-			if ( password != null ){	// キャンセルの場合は何もしない
-				const params = new URLSearchParams()
-				params.append('productID', item.ID)
-				params.append('productPassword', password)
-
-				axios.post('/UserPasswordCollation', params)
-				.then(response => {
-					if ( response.status == 200 ) {
-
-						// 一致している場合は、メッセージ表示画面へ
-						let baseUrl = './message.html';
-						// パラメータ付きURL作成
-						let urlParameter = {
-							id: item.ID
-						};
-						let newUrl = baseUrl + "?" + 
-							Object.entries(urlParameter).map((e) => {
-									let key = e[0];
-									let value = encodeURI(e[1]);
-									return `${key}=${value}`;
-								}).join("&");
-						location.href = newUrl;
-					} else if (response.status == 401){
-
-						// パスワードが一致していない場合は、エラー画面へ
-						location.assign('./error.html');
-					} else {
-						throw new Error('fetchProduct Response Error')
-					}
-				})
-			}
 		},
 		// 入力値を初期化する
 		initInputValue() {

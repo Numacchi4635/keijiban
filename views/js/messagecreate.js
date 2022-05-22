@@ -8,6 +8,8 @@ new Vue({
 		productName: '',
 		// メッセージ
 		productMessage: '',
+		// 管理者パスワード
+		superUserPassword: '',
 		// publicMode(サーバー側の環境変数)
 		PublicMode: '',
 		// タイトル
@@ -31,6 +33,7 @@ new Vue({
 			const params = new URLSearchParams()
 			params.append('productName', this.productName)
 			params.append('productMessage', this.productMessage)
+			params.append('superUserPassword', this.superUserPassword)
 
 			axios.post('/addProduct', params)
 			.then(response => {
@@ -39,6 +42,16 @@ new Vue({
 				} else {
 					// index.htmlに戻る
 					location.href = './index.html';
+				}
+			})
+			.catch(function(error){
+				if (error.response.status == 401){
+					// パスワードが一致していない場合はエラーページへ
+					this.isKeijibanDisplay = false
+					let url = './superusererror.html';
+					location.href = url;
+				} else {
+					throw new Error('addProduct Response Error')
 				}
 			})
 		},
@@ -70,17 +83,17 @@ new Vue({
 		},
 		// 管理者専用パスワード処理
 		openSuperUserPassword() {
-			let password = prompt('管理者専用パスワードを入力してください');
+			this.superUserPassword = prompt('管理者専用パスワードを入力してください');
 
 			// キャンセルボタン押下時はエラーページへ
-			if (password == null){
+			if (this.superUserPassword == null){
 				let url = './superusererror.html';
 				location.href = url;
 			}
 
 			axios.get('/superUserPasswordCollation', {
  				params: {
-					productPassword: password
+					productPassword: this.superUserPassword
 				}
 			})
 			.then(response => {
