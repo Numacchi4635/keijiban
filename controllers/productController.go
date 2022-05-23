@@ -1,4 +1,4 @@
-package controller
+package controllers
 
 import (
 	// 標準出力（エラーログ）
