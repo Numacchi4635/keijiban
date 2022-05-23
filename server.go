@@ -32,22 +32,21 @@ func server() {
 	// Logger と アプリケーションクラッシュをキャッチするRecoveryミドルウェアを保有しています
 	router := gin.Default()
 
-
 	path, err := filepath.Abs("./")
 	if err != nil {
 		fmt.Print(err.Error())
 		return
 	}
 
-fmt.Println(path);
-fileInfos, err := ioutil.ReadDir(path+"/views")
-if err != nil {
-	log.Fatal(err)
+	fmt.Println(path)
+	fileInfos, err := ioutil.ReadDir(path + "/views")
+	if err != nil {
+		log.Fatal(err)
 	}
 
-for _, fileInfo := range fileInfos {
-	fmt.Println(fileInfo.Name())
-}
+	for _, fileInfo := range fileInfos {
+		fmt.Println(fileInfo.Name())
+	}
 
 	// 環境変数からDEBUG_MODE取得
 	DEBUG_MODE := os.Getenv("DEBUG_MODE")
@@ -70,13 +69,13 @@ for _, fileInfo := range fileInfos {
 	router.GET("/responseServerEnv", controllers.ResponseServerEnv)
 
 	// 管理者パスワードの照合を行う
-	router.GET("/superUserPasswordCollation", controllers.SuperUserPasswordCollation);
+	router.GET("/superUserPasswordCollation", controllers.SuperUserPasswordCollation)
 
 	// 掲示板情報をDBへ登録する
 	router.POST("/addProduct", controllers.AddProduct)
 
 	// 掲示板情報を変更する
-//	router.POST("/changeStateProduct", controller.ChangeStateProduct)
+	//	router.POST("/changeStateProduct", controller.ChangeStateProduct)
 
 	// 掲示板情報を削除する
 	router.POST("/deleteProduct", controllers.DeleteProduct)
@@ -93,7 +92,7 @@ for _, fileInfo := range fileInfos {
 		}
 	} else {
 		fmt.Println(os.Getenv("PORT"))
-		if err := router.Run(":"+os.Getenv("PORT")); err != nil {
+		if err := router.Run(":" + os.Getenv("PORT")); err != nil {
 			log.Fatal("Server Run Failed.: ", err)
 		}
 	}

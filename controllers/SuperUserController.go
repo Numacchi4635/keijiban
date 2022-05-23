@@ -1,6 +1,6 @@
 package controllers
 
-import ( 
+import (
 	// http
 	"net/http"
 
@@ -21,14 +21,14 @@ func AddSuperUser(c *gin.Context) {
 	superUserID := c.PostForm("superUserID")
 	superUserPassword := c.PostForm("superUserPassword")
 	var SuperUser = superuser.SuperUser{
-		ID	:SuperUserIDNo,
-		UserID	:superUserID,
-		Password:superUserPassword,
+		ID:       SuperUserIDNo,
+		UserID:   superUserID,
+		Password: superUserPassword,
 	}
 	db.InsertSuperUser(&SuperUser)
 }
 
-func SuperUserPasswordCollation(c *gin.Context){
+func SuperUserPasswordCollation(c *gin.Context) {
 	inputPassword := c.Query("productPassword")
 	resultSuperUser := db.FindSuperUser()
 	if resultSuperUser == nil {
@@ -42,7 +42,7 @@ func SuperUserPasswordCollation(c *gin.Context){
 	}
 }
 
-func SuperUserPasswordCollationDB(inputPassword string) int{
+func SuperUserPasswordCollationDB(inputPassword string) int {
 	resultSuperUser := db.FindSuperUser()
 	if resultSuperUser == nil {
 		return http.StatusInternalServerError
