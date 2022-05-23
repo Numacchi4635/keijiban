@@ -12,12 +12,14 @@ import (
 	// HTTPを扱うパッケージ
 	"net/http"
 
-	"github.com/Numacchi4635/keijiban/controllers"
 	// Gin
 	"github.com/gin-gonic/gin"
 
 	// MySQL用ドライバ
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+
+	// コントローラ
+	"github.com/Numacchi4635/keijiban/controllers"
 )
 
 func main() {
