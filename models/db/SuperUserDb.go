@@ -16,13 +16,13 @@ import (
 
 // DB接続する
 func openSuperUser() (*gorm.DB, error) {
-	DBMS :="mysql"
+	DBMS := "mysql"
 	CONNECT := os.Getenv("CONNECT")
 
 	db, err := gorm.Open(DBMS, CONNECT)
 
 	if err != nil {
-		fmt.Println(err);
+		fmt.Println(err)
 		return nil, err
 	}
 
@@ -49,7 +49,7 @@ func FindSuperUser() []superuser.SuperUser {
 	db, err := openSuperUser()
 	if err != nil {
 		fmt.Println(err)
-		return nil;
+		return nil
 	}
 
 	// select
@@ -71,7 +71,7 @@ func InsertSuperUser(registerSuperUser *superuser.SuperUser) error {
 
 	if len(existSuperUser) >= 1 {
 		// テーブルのレコードが存在する場合は消去する
-		for i := 0; i < len(existSuperUser); i++{
+		for i := 0; i < len(existSuperUser); i++ {
 			DeleteSuperUser(existSuperUser[i].ID)
 		}
 	}

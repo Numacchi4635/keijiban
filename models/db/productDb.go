@@ -23,12 +23,12 @@ func open() (*gorm.DB, error) {
 
 	db, err := gorm.Open(DBMS, CONNECT)
 	if err != nil {
-		fmt.Println(err);
+		fmt.Println(err)
 		panic(err.Error())
 	}
 
 	// DBエンジンを「InnoDB」に設定
-	db.Set("gorm:table_options", "ENGINE=InnoDB");
+	db.Set("gorm:table_options", "ENGINE=InnoDB")
 
 	// 詳細なログを表示
 	db.LogMode(true)
@@ -50,7 +50,7 @@ func FindAllProducts() []entity.Product {
 	db, err := open()
 	if err != nil {
 		fmt.Println(err)
-		return nil;
+		return nil
 	}
 	// select
 	db.Order("ID asc").Find(&products)
@@ -79,7 +79,7 @@ func FindProduct(productID int) (entity.Product, error) {
 
 // InsertProduct は 掲示板テーブルにレコードを追加する
 func InsertProduct(registerProduct *entity.Product) error {
-fmt.Println("InsertProduct Start");
+	fmt.Println("InsertProduct Start")
 	db, err := open()
 	if err != nil {
 		fmt.Println(err)

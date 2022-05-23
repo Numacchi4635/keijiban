@@ -1,4 +1,4 @@
-package controller
+package controllers
 
 import (
 	// 標準出力（エラーログ）
@@ -28,8 +28,8 @@ import (
 
 // 環境変数publicModeを含む返信用struct
 type resultResponse struct {
-	Products	[]entity.Product
-	PublicMode	string
+	Products   []entity.Product
+	PublicMode string
 }
 
 // FetchAllProducts は 全ての掲示板情報を取得する
@@ -39,10 +39,10 @@ func FetchAllProducts(c *gin.Context) {
 
 	// 管理者パスワード照合
 	rtn := SuperUserPasswordCollationDB(inputPassword)
-	if ( rtn == http.StatusInternalServerError ){
+	if rtn == http.StatusInternalServerError {
 		fmt.Println("Internal Server Error")
 		c.JSON(http.StatusInternalServerError, nil)
-	} else if (rtn == http.StatusUnauthorized) {
+	} else if rtn == http.StatusUnauthorized {
 		fmt.Println("管理者パスワード不一致")
 		c.JSON(http.StatusUnauthorized, nil)
 	}
@@ -53,11 +53,11 @@ func FetchAllProducts(c *gin.Context) {
 	}
 
 	// 環境変数publicMode取得
-	PublicMode :=  os.Getenv("PUBLIC_MODE")
+	PublicMode := os.Getenv("PUBLIC_MODE")
 
-	ResultResponse := resultResponse {
-		Products:	ResultProducts,
-		PublicMode:	PublicMode,
+	ResultResponse := resultResponse{
+		Products:   ResultProducts,
+		PublicMode: PublicMode,
 	}
 
 	// URLへのアクセスに対してJSONを返す
@@ -104,10 +104,10 @@ func AddProduct(c *gin.Context) {
 
 	// 管理者パスワード照合
 	rtn := SuperUserPasswordCollationDB(InputPassword)
-	if ( rtn == http.StatusInternalServerError ){
+	if rtn == http.StatusInternalServerError {
 		fmt.Println("Internal Server Error")
 		c.JSON(http.StatusInternalServerError, nil)
-	} else if (rtn == http.StatusUnauthorized) {
+	} else if rtn == http.StatusUnauthorized {
 		fmt.Println("管理者パスワード不一致")
 		c.JSON(http.StatusUnauthorized, nil)
 	}
@@ -118,16 +118,16 @@ func AddProduct(c *gin.Context) {
 	ProductPassword, _ := MakeRandomStr(128)
 
 	var Product = entity.Product{
-		Name:    ProductName,
-		Message: ProductMessage,
-		Password:ProductPassword,
+		Name:     ProductName,
+		Message:  ProductMessage,
+		Password: ProductPassword,
 	}
 
 	db.InsertProduct(&Product)
 }
 
 // 推測不可能なパスワード生成
-func MakeRandomStr(digit uint32) (string, error){
+func MakeRandomStr(digit uint32) (string, error) {
 	const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
 	// 乱数を生成
@@ -159,14 +159,13 @@ func DeleteProduct(c *gin.Context) {
 
 	// 管理者パスワード照合
 	rtn := SuperUserPasswordCollationDB(inputPassword)
-	if ( rtn == http.StatusInternalServerError ){
+	if rtn == http.StatusInternalServerError {
 		fmt.Println("Internal Server Error")
 		c.JSON(http.StatusInternalServerError, nil)
-	} else if (rtn == http.StatusUnauthorized) {
+	} else if rtn == http.StatusUnauthorized {
 		fmt.Println("管理者パスワード不一致")
 		c.JSON(http.StatusUnauthorized, nil)
 	}
-
 
 	err = db.DeleteProduct(ProductID)
 	if err != nil {
@@ -198,10 +197,10 @@ func UserPasswordCollation(c *gin.Context) {
 // 環境変数を返す
 func ResponseServerEnv(c *gin.Context) {
 	// 環境変数PUBLIC_MODE取得
-	PublicMode :=  os.Getenv("PUBLIC_MODE")
+	PublicMode := os.Getenv("PUBLIC_MODE")
 
-	ResultResponse := resultResponse {
-		PublicMode:	PublicMode,
+	ResultResponse := resultResponse{
+		PublicMode: PublicMode,
 	}
 
 	// URLへのアクセスに対してJSONを返す
