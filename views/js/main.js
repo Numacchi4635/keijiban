@@ -79,7 +79,7 @@ new Vue({
 					this.products = resultProducts
 
 					// 取得した環境変数ごとに、タイトルを変更
-					if (resultProducts.publicMode == 'public'){
+					if (resultProducts.PublicMode == 'public'){
 						this.title = 'パスワード認証付き掲示板'
 					} else {
 						this.title = '🐹🍎ゆゆこ🍎🐹ファミリーボード返信掲示板'
