@@ -166,14 +166,8 @@ func UserPasswordCollation(c *gin.Context) {
 	resultFindProduct, _ := db.FindProduct(inputPassword)
 
 	if inputPassword == resultFindProduct.Password {
-fmt.Println("パスワード一致")
-fmt.Println(inputPassword)
-fmt.Println(resultFindProduct.Password)
 		c.JSON(http.StatusOK, resultFindProduct)
 	} else {
-fmt.Println("パスワード不一致")
-fmt.Println(inputPassword)
-fmt.Println(resultFindProduct.Password)
 		c.JSON(http.StatusUnauthorized, nil)
 	}
 }
