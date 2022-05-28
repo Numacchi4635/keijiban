@@ -4,6 +4,9 @@
 		<meta charset="utf-8">
 		<title>メッセージ投稿ページ</title>
 
+		<!-- スタイルシート -->
+		<link rel="stylesheet" type="text/css" href="/views/css/product.css">
+
 		<!-- Vue.js -->
 		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js" defer></script>
 
@@ -11,7 +14,7 @@
 		<script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
 
 		<!-- Vueインスタンス -->
-		<script src="/views/js/messagecreate.js" defer></script>
+		<script src="/views/js/messagemanager.js" defer></script>
 
 		<!-- 戻りボタン制御 -->
 		<script src="/views/js/modoru.js" defer></script>
@@ -21,12 +24,41 @@
 			<div v-show="isDisplay">
 				<h1>{{ title }}</h1>
 
+				<!-- 管理者情報設定・変更ページへ -->
+				<p><button type="button" onclick="window.open('./dreamersonly.html')">管理者情報設定・変更ページへ</button></p>
+
 				<p>宛先：<input type="text" name='productName' v-model="productName" value='' size="40"></p>
 				<p>メッセージ：<input type="text" name='productMessage' v-model="productMessage" value='' size="40"></p>
 				<!-- 送信ボタン -->
 				<button v-on:click="doAddProduct">
 					送信
 				</button>
+				<hr>
+
+				<!-- メッセージ一覧表示 -->
+				<table>
+					<thread v-pre>
+						<tr>
+							<th class="index">ID</th>
+							<th class="name">宛先</th>
+							<th class="message">メッセージ</th>
+							<th class="delete">削除</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr v-for="item, index) in computedProducts">
+							<td class="index">{{ item.ID }}</td>
+							<td class="name">{{ item.Name }}</td>
+							<td class="message">{{ item.Message }}</td>
+							<td class="delete">
+								<!-- 削除ボタン -->
+								<button v-on:click="doDeleteProduct(item.ID)">
+									削除
+								</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 
 				<div v-show="isButton">
 					<p><button type="button" onclick="window.open('./2021autmnmessage.html')">2021年秋のメッセージボードへ</button></p>
@@ -34,6 +66,6 @@
 				</div>
 			</div>
 		</div>
-		<p><input type="button" value="掲示板一覧へ戻る" id="modoru"><p>
+		<p><input type="button" value="トップページへ戻る" id="modoru"><p>
 	</body>
 </html>

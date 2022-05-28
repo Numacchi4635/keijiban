@@ -71,17 +71,14 @@ func server() {
 	// 管理者パスワードの照合を行う
 	router.GET("/superUserPasswordCollation", controllers.SuperUserPasswordCollation)
 
+	// ユーザーパスワードの照合を行う
+	router.GET("/userPasswordCollation", controllers.UserPasswordCollation)
+
 	// 掲示板情報をDBへ登録する
 	router.POST("/addProduct", controllers.AddProduct)
 
-	// 掲示板情報を変更する
-	//	router.POST("/changeStateProduct", controller.ChangeStateProduct)
-
 	// 掲示板情報を削除する
 	router.POST("/deleteProduct", controllers.DeleteProduct)
-
-	// ユーザーパスワードの照合
-	router.POST("/UserPasswordCollation", controllers.UserPasswordCollation)
 
 	// SuperUserパスワードを設定・変更
 	router.POST("/InsertSuperUserPassword", controllers.AddSuperUser)

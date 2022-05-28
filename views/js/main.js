@@ -22,8 +22,6 @@ new Vue({
 		isEntered: false,
 		// タイトル
 		title: '',
-		// true:掲示板表示・false：掲示板非表示
-		isKeijibanDisplay: false,
 	},
 
 	// 算出プロパティ
@@ -49,18 +47,80 @@ new Vue({
 	// インスタンス作成時の処理
 	created: function() {
 		// 掲示板一覧表示
-		this.doFetchAllProducts()
+		this.responseServerEnv()
 	},
 
 	// メソッド定義
 	methods: {
+		// 環境変数PublicMode取得
+		responseServerEnv() {
+			axios.get('/responseServerEnv')
+			.then(response => {
+				if (response.status != 200) {
+					throw new Error('responseServerEnv Response Error')
+				} else {
+					var resultResponse = response.data
+
+					// 取得した環境変数毎にタイトル変更
+					if (resultResponse.PublicMode === 'public'){
+						this.title = '管理者専用ページ'
+					} else if (resultResponse.PublicMode === 'private'){
+						this.title = '🐹🍎ゆゆこ🍎🐹ファミリーボード返信掲示板'
+					} else {
+						this.title = 'パスワード認証付き掲示板'
+					}
+				}
+			})
+		},
+
+		// ユーザーパスワード認証処理
+		doUserPasswordCollation(){
+			// パスワード入力
+			let password = prompt('パスワードを入力してください');
+
+			// URLパラメータ取得
+			let url = new URL(window.location.href);
+			let params = url.searchParams;
+
+			axios.get('/userPasswordCollation', {
+				params: {
+					productPassword: password
+				}
+			})
+			.then(response => {
+				if (response.status == 200){
+					// パスワードが一致している場合は、メッセージ表示画面へ
+					let baseUrl = './message.html';
+
+					// パラメータ付きURL作成
+					let urlParameter = {
+						pass: password
+					};
+					let newUrl = baseUrl + "?" + 
+						Object.entries(urlParameter).map((e) => {
+							let key = e[0];
+							let value = encodeURI(e[1]);
+							return `${key}=${value}`;
+						}).join("&");
+					location.href = newUrl;
+				}
+			})
+			.catch(function(error){
+				if (error.response.status == 401) {
+					// パスワードが一致していない場合は、エラー画面へ
+					location.assign('./error.html');
+				} else {
+					throw new Error('doUserPasswordCollation Response Error')
+				}
+			})
+		},
+
 		// 全ての掲示板情報を取得する
 		doFetchAllProducts() {
 			this.superUserPassword = prompt('管理者専用パスワードを入力してください');
 
 			// パスワード未入力時はエラーページへ
 			if (this.superUserPassword == null){
-				this.isKeijibanDisplay = false
 				let url = './superusererror.html';
 				location.href = url;
 			}
@@ -72,7 +132,6 @@ new Vue({
 			})
 			.then(response => {
 				if (response.status == 200){
-					this.isKeijibanDisplay = true
 					var resultProducts = response.data
 
 					// サーバから取得した掲示板情報をdataに設定する
@@ -89,45 +148,12 @@ new Vue({
 			.catch(function(error){
 				if (error.response.status == 401){
 					// パスワードが一致していない場合はエラーページへ
-					this.isKeijibanDisplay = false
 					let url = './superusererror.html';
 					location.href = url;
 				} else {
 					throw new Error('fetchAllProducts Response Error')
 				} 
 			})
-		},
-		// 掲示板情報を削除する
-		doDeleteProduct(ID) {
-			// 管理者用パスワード入力
-			this.superUserPassword  = prompt('管理者専用パスワードを入力してください');
-
-			if ( this.superUserPassword != null ){
-
-				// サーバへ送信するパラメータ
-				const params = new URLSearchParams()
-				params.append('productID', ID)
-				params.append('superUserPassword', this.superUserPassword)
-
-				axios.post('/deleteProduct', params).then(response => {
-					if (response.status != 204) {
-						throw new Error('deleteProduct Response Error')
-					} else {
-						// 削除成功時は、index.htmlを更新する
-						location.reload();
-					}
-				})
-				.catch(function(error){
-					if (error.response.status == 401){
-						// パスワードが一致していない場合はエラーページへ
-						let url = './superusererror.html';
-						location.href = url;
-					} else {
-						// 上記以外のエラーの場合
-						throw new Error('deleteProduct Response Error')
-					}
-				})
-			}
 		},
 		// メッセージ表示ページへ移動する処理
 		openMessagePage(ID) {

@@ -14,18 +14,14 @@ var app = new Vue({
 
 	methods: {
 		GetProductData(){
-			// パスワード入力
-			let password = prompt('パスワードを入力してください');
-
 
 			// URLパラメータ取得
 			let url = new URL(window.location.href);
 			let params = url.searchParams;
-			let Id = params.get('id');
+			let password = params.get('pass');
 
 			axios.get('/fetchProduct', {
 				params: {
-					productID: Id,
 					productPassword: password
 				}
 			})

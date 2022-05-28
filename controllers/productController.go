@@ -34,7 +34,6 @@ type resultResponse struct {
 
 // FetchAllProducts は 全ての掲示板情報を取得する
 func FetchAllProducts(c *gin.Context) {
-
 	inputPassword := c.Query("productPassword")
 
 	// 管理者パスワード照合
@@ -66,31 +65,16 @@ func FetchAllProducts(c *gin.Context) {
 
 // FindProduct は 指定したIDの掲示板情報を取得する
 func FindProduct(c *gin.Context) {
-	ProductIDStr := c.Query("productID")
 
-	ProductID, err := strconv.Atoi(ProductIDStr)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, nil)
-		return
-	}
 
 	ProductPassword := c.Query("productPassword")
-	if err != nil {
-		c.JSON(http.StatusBadRequest, nil)
-		return
-	}
 
-	ResultProduct, err := db.FindProduct(ProductID)
+	ResultProduct, err := db.FindProduct(ProductPassword)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, nil)
-		return
-	}
-
-	// 入力パスワードが違う場合
-	if ResultProduct.Password != ProductPassword {
 		c.JSON(http.StatusUnauthorized, nil)
 		return
 	}
+
 
 	// URLへのアクセスに対してJSONを返す
 	c.JSON(http.StatusOK, ResultProduct)
@@ -178,17 +162,11 @@ func DeleteProduct(c *gin.Context) {
 
 // パスワード照合
 func UserPasswordCollation(c *gin.Context) {
-	InputIDStr := c.PostForm("productID")
-	InputID, err := strconv.Atoi(InputIDStr)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, nil)
-		return
-	}
-	InputPassword := c.PostForm("ProductPassword")
-	ResultFindProduct, _ := db.FindProduct(InputID)
+	inputPassword := c.Query("productPassword")
+	resultFindProduct, _ := db.FindProduct(inputPassword)
 
-	if InputPassword == ResultFindProduct.Password {
-		c.JSON(http.StatusOK, ResultFindProduct)
+	if inputPassword == resultFindProduct.Password {
+		c.JSON(http.StatusOK, resultFindProduct)
 	} else {
 		c.JSON(http.StatusUnauthorized, nil)
 	}

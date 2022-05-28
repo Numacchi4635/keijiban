@@ -62,7 +62,7 @@ func FindAllProducts() []entity.Product {
 }
 
 // FindProduct は 掲示板テーブルのレコードを1件取得する
-func FindProduct(productID int) (entity.Product, error) {
+func FindProduct(password string) (entity.Product, error) {
 	product := entity.Product{}
 
 	db, err := open()
@@ -71,7 +71,7 @@ func FindProduct(productID int) (entity.Product, error) {
 		return product, err
 	}
 	// select
-	db.First(&product, productID)
+	db.Find(&product, "password=?", password)
 	defer db.Close()
 
 	return product, nil

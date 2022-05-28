@@ -92,7 +92,7 @@ new Vue({
 					location.href = url;
 				} else {
 					// 上記以外のエラーの場合
-					throw new Error('fetchProduct Response Error')
+					throw new Error('openSuperUserPassword Response Error')
 				}
 			})
 		}
