@@ -19,6 +19,12 @@ var app = new Vue({
 			let url = new URL(window.location.href);
 			let params = url.searchParams;
 			let password = params.get('pass');
+			let name = params.get('name');
+console.log(name)
+			if (name == ''){
+				// URLパラメータのnameがnullならばエラー画面へ
+				location.assign('./errornoname.html');
+			}
 
 			axios.get('/fetchProduct', {
 				params: {

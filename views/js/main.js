@@ -89,12 +89,17 @@ new Vue({
 			})
 			.then(response => {
 				if (response.status == 200){
+					// データ取得
+					var resultProducts = response.data
+					var encodeUserName = encodeURIComponent(resultProducts.Name)
+
 					// パスワードが一致している場合は、メッセージ表示画面へ
 					let baseUrl = './message.html';
 
 					// パラメータ付きURL作成
 					let urlParameter = {
-						pass: password
+						pass: password,
+						name: encodeUserName
 					};
 					let newUrl = baseUrl + "?" + 
 						Object.entries(urlParameter).map((e) => {
