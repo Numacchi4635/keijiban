@@ -7,6 +7,9 @@
 		<meta http-equiv="Expires" content="0">
 		<title>🐹🍎ゆゆこ🍎🐹2021 Autumn Message Board</title>
 
+		<!-- スタイルシート -->
+		<link rel="stylesheet" type="text/css" href="/views/css/messageboard.css">
+
 		<!-- Vue.js -->
 		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js" defer></script>
 
@@ -20,17 +23,71 @@
 		<div id="app">
 			<div v-show="isMessageBoard">
 				<header>
-					<h1>
-						<img src="/views/image/2021Autumn/2021Autumn_Title.png">
-					</h1>
+					<h1>2021 Autumn Message Board</h1>
 				</header>
-				<p><img src="/views/image/2021Autumn/2021Autumn01.png"> <img src="/views/image/2021Autumn/2021Autumn02.png"></p>
-				<p><img src="/views/image/2021Autumn/2021Autumn03.png"> <img src="/views/image/2021Autumn/2021Autumn04.png"></p>
-				<p><img src="/views/image/2021Autumn/2021Autumn05.png"> <img src="/views/image/2021Autumn/2021Autumn06.png"></p>
-				<p><img src="/views/image/2021Autumn/2021Autumn07.png"> <img src="/views/image/2021Autumn/2021Autumn08.png"></p>
-				<p><img src="/views/image/2021Autumn/2021Autumn09.png"> <img src="/views/image/2021Autumn/2021Autumn10.png"></p>
-				<p><img src="/views/image/2021Autumn/2021Autumn11.png"> <img src="/views/image/2021Autumn/2021Autumn12.png"></p>
-				<p><img src="/views/image/2021Autumn/2021Autumn13.png"></p>
+				<table>
+					<thead>
+						<tr>
+							<th class="name">名前</th>
+							<th class="message">メッセージ</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td class="name">ましゃぴこ🍎🐹</td>
+							<td class="message">ゆゆこさんは皆に無理させたくない皆ランクの上がり下がりに一喜一憂する素敵な枠素敵な関係ゆゆこさんは配信時間が減って申し訳なく感じてると思うでも...ホントにお互い無理し過ぎなくて良いよね自然体でそれぞれのできる範疇でゆゆこさんはゆゆこさんのままで良い皆大好き、皆が大好き愛があれば大丈夫だよね🥰</td>
+						</tr>
+						<tr>
+							<td class="name">成金丸🌕</td>
+							<td class="message">色々頑張ってますね。新しく始めたことも上手く行くと思います。またいつもの笑顔で2022年もよろしくお願いします😊</td>
+						</tr>
+						<tr>
+							<td class="name">たつや🥂💓</td>
+							<td class="message">あけおめ (´∀`)ﾉことよろ🙇🌄🎍ゆゆこと出会ってから1年以上たつね、来るたびに癒され1日の出来事が吹き飛ばされました🤣これからもよろしくね(´▽ソﾉ</td>
+						</tr>
+						<tr>
+							<td class="name">ぽじもん</td>
+							<td class="message">ゆゆこうた MY BEST 5♪<br>① 二人は恋人<br>②初恋サイダー<br>③ たばこ<br>④ 愛が生まれた日<br>⑤花火<br>心安らぐ歌声と可憐なファッションが大好き💕いつも優しくしてくれてありがとう✨
+						</tr>
+						<tr>
+							<td class="name">Scarface(スカーと呼んでね)</td>
+							<td class="message">ゆゆこさん、いつも元気で素敵な笑顔の奥に、癒しと楽しさと、 明日への希望の力をのせて配信して頂いてスゴク感謝しています😊毎回トーク、お洋服、お料理等のアートセンスに感動してます😊初夏のパリのアートな雰囲気でハワイの解放的な優しく包み込む海のような配信と栄養学系料理家の道を今後も応援します</td>
+						</tr>
+						<tr>
+							<td class="name">🐰🐿🍊Kazu兎🦥🧜☯🔥🔷🦇</td>
+							<td class="message">手紙 年老いた私が ある日 今までの私と違っていたとしてもどうかそのままの理解して欲しい。私が服の上に食べ物をこぼしても靴ひもを結び忘れても、あなたに色んな事を教えた
+ように見守って欲しい。 あなたと話す時同じ話を何度も何度も繰り返してもその結末をどうかさえぎらずにうなずいて欲しい。 消え去ってゆくように見える私の心へと励ましのまなざしを向けて欲しい</td>
+						</tr>
+						<tr>
+							<td class="name">🚤おとき🚤</td>
+							<td class="message">ゆ、 親衛隊の者だが、君はとても可愛いしリスナーさんを大事にしてる姿がとても心にグッと来ます😋これからも楽しい枠にしてねー😋😋😋👍</td>
+						</tr>
+						<tr>
+							<td class="name">らいあん🐹🍎</td>
+							<td class="message">ゆゆこちゃん<br>仲良くしてくれてありがとう💞<br>勉強 落ち着いたら地方巡業にも来てね😃<br>これからも よろしくです😊💓</td>
+						</tr>
+						<tr>
+							<td class="name"><i>Poko</i>ちゃん</td>
+							<td class="message">いつもありがとう!🧒</td>
+						</tr>
+						<tr>
+							<td class="name">🐣☃🍮花火師💠🐿</td>
+							<td class="message">ゆゆこに出会ったのは、1年半ぐらい前だったね。 ゆゆこの配信は雰囲気が凄く良く、ゆゆこのキャラクターも大好きで、いつも最高の癒しをありがとう💓これからは課金制限中の為アイテム応援は少なくなるけど、時間でエール上げて頑張ります♫これからもよろしく😉👍♪♪♪わーい🙌わーい🙌わーい🙌わーい🙌わーい🙌わーい🙌わーい🙌わーい🙌わーい🙌</td>
+						</tr>
+						<tr>
+							<td class="name">🦅🐹ごんべー😝🍎</td>
+							<td class="message">最後ずっと潜ってばかりでごめんね🙇ポコチャ休止するけど、ゆゆこのこれからの活躍を信じてます😝<br>頑張れ🖖ワァヽ(*゜∀゜*)ノー(*° v° *), -イ頑張れ🖖ワァー· ` (*° \/° *)/-イ頑張れ🖖ワァ―――¯ヽ(*°∀°*)ノーイ<br>620文字書けるみたいだけど無理だ🤣</td>
+						<tr>
+							<td class="name">🐹🍎🌳ぬまっち🌳🍎🐹</td>
+							<td class="message">いやー、 ゆゆことの思い出は、全て俺にとってWonderful Memoriesだよー🥰思い出はHappinessいつまでもEndlessだからねー😍少しでもたくさん、積み重ねていきたいねー☺2022年もゆゆことファミリーみんながHappyな1年になりますように...</td>
+						</tr>
+						<tr>
+							<td class="name">フォノ🐹🍎</td>
+							<td class="message">ゆゆこさん<br><br>12月でゆゆこさん・ゆゆこ枠と出会って1年、メインアシスタントとしては半年が経ちました。<br>最初に自分が配信に行った時から、 ゆゆこさんは優しく悩みを聞いてくれて、楽しく話してくれたことを覚えています。<br>特にアシスタントになってからは、 ゆゆこさんは毎枠､ 衣装選びから、 配信中に新しい事に取り組んだり、話のきっかけを作って、みんなが楽しんでいるかどうか常に気を配って、落ち込んでいたら親身になって返事をしている事を知って、益々、 応援したいと
+思うようになりました。<br>古参のメンバーだけでなく、毎月、温かいリスナーさんが増えていって、日に日にファミリーを見ることが楽しくなって、順風満帆で無いこともいっぱいありましたが、その度にファミリーメンバーから温かい言葉が飛んで、みんなの結束・協力があって何度も難局を乗り越えて。 ゆゆこさんを応援するメンバーまで含めて、本当に素敵だなと強く思います。<br><br>ゆゆこさんは今後のキャリア観点から勉強時間の確保について悩んでいる事も知りましたが、 これからもこんなに素敵なゆゆこ枠をずっと継続できるように、 続けてもらえるように、 応援していきたいと思っています。<br>ゆゆこさん、これからもよろしくお願いします。<br><br>追伸: ゆゆこさんの配信中に、たまに会議と夢の世界へ行くことがある事は、温かくお許し下さい。</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 

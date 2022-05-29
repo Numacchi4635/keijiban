@@ -2,10 +2,10 @@
 <html lang="ja">
 	<head>
 		<meta charset="utf-8">
-		<title>メッセージ投稿ページ</title>
+		<title>管理者専用ページ</title>
 
 		<!-- スタイルシート -->
-		<link rel="stylesheet" type="text/css" href="/views/css/product.css">
+		<link rel="stylesheet" type="text/css" href="/views/css/messagemanager.css">
 
 		<!-- Vue.js -->
 		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js" defer></script>
@@ -37,7 +37,7 @@
 
 				<!-- メッセージ一覧表示 -->
 				<table>
-					<thread v-pre>
+					<thead v-pre>
 						<tr>
 							<th class="index">ID</th>
 							<th class="name">宛先</th>

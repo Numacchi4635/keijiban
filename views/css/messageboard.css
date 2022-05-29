@@ -1,0 +1,38 @@
+.alert-color {
+	border-color: #ff0000;
+}
+h1 {
+	font-family: cursive;
+}
+table {
+	border-collapse: collapse;
+}
+thead, tbody {
+	display: block;
+}
+tbody {
+//	height: 250px;
+	width: 1800px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+}
+th,td {
+	background-color: #ffffff;
+	border: 1px solid #ffcc66;
+	padding: 0 8px;
+	line-height: 40px;
+}
+thead th {
+	background-color: #fff5e5;
+	border: 1px solid #ffcc66;
+	color: #ff9900;
+}
+th.name, td.name {
+	width: 300px;
+}
+th.message, td.message {
+	width: 500px;
+}
+tbody tr:hover td {
+	background: #ccffff;
+}

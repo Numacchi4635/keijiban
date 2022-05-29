@@ -4,6 +4,9 @@
 		<meta charset="utf-8">
 		<title>🐹🍎ゆゆこ🍎🐹2022 Winter Message Board</title>
 
+		<!-- スタイルシート -->
+		<link rel="stylesheet" type="text/css" href="/views/css/messageboard.css">
+
 		<!-- Vue.js -->
 		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js" defer></script>
 
@@ -17,22 +20,105 @@
 		<div id="app">
 			<div v-show="isMessageBoard">
 				<header>
-					<h1>
-						<img src="/views/image/2022Winter/2022Winter_Title.png">
-					</h1>
+					<h1>2022 Winter Message Board</h1>
 				</header>
-				<p><img src="/views/image/2022Winter/2022Winter01.png"> <img src="/views/image/2022Winter/2022Winter02.png"></p>
-				<p><img src="/views/image/2022Winter/2022Winter03.png"> <img src="/views/image/2022Winter/2022Winter04.png"></p>
-				<p><img src="/views/image/2022Winter/2022Winter05.png"> <img src="/views/image/2022Winter/2022Winter06.png"></p>
-				<p><img src="/views/image/2022Winter/2022Winter07.png"> <img src="/views/image/2022Winter/2022Winter08.png"></p>
-				<p><img src="/views/image/2022Winter/2022Winter09.png"> <img src="/views/image/2022Winter/2022Winter10.png"></p>
-				<p><img src="/views/image/2022Winter/2022Winter11.png"> <img src="/views/image/2022Winter/2022Winter12.png"></p>
-				<p><img src="/views/image/2022Winter/2022Winter13.png"> <img src="/views/image/2022Winter/2022Winter14.png"></p>
-				<p><img src="/views/image/2022Winter/2022Winter13.png"> <img src="/views/image/2022Winter/2022Winter14.png"></p>
-				<p><img src="/views/image/2022Winter/2022Winter15.png"> <img src="/views/image/2022Winter/2022Winter16.png"></p>
-				<p><img src="/views/image/2022Winter/2022Winter17.png"> <img src="/views/image/2022Winter/2022Winter18.png"></p>
-				<p><img src="/views/image/2022Winter/2022Winter19.png"> <img src="/views/image/2022Winter/2022Winter20.png"></p>
-				<p><img src="/views/image/2022Winter/2022Winter21.png"></p>
+				<table>
+					<thead>
+						<tr>
+							<th class="name">名前</th>
+							<th class="message">メッセージ</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td class="name">てんちゃん</td>
+							<td class="message">ゆゆちゃん、お誕生日おめでとうございます🎂。<br>充実した3ヶ月でしたね☺。<br>4月もよろしくおねがいします☺。</td>
+						</tr>
+						<tr>
+							<td class="name">やづや💛🐾🌊🌺🐹🍎🍺💗</td>
+							<td class="message">ゆゆこちゃんなかなか配信行けなくてごめんね😥でもファミリーの人みんないいひとばかり最高🤩これからもゆゆこちゃんよろしくお願いします😀必ず10k取るからもう少し待ってね🤩</td>
+						</tr>
+						<tr>
+							<td class="name">くまたん👻</td>
+							<td class="message">ゆゆこしゃん! いつも素敵な配信ありがとうごじゃいます。<br><br>こんなくまと遊んでくれてありがとう～!</td>
+						</tr>
+						<tr>
+							<td class="name">刺身🍓🥟</td>
+							<td class="message">たまにコメントした事を丁寧に返してくれる貴方に魅了されてます。これからもどうぞよろしく</td>
+						</tr>
+						<tr>
+							<td class="name">🎧あっきーあっきー💍</td>
+							<td class="message">お気に入りのあたいのファンなら寝るんじゃないよ😠のリアクションがある限りお邪魔します。
+						</tr>
+						<tr>
+							<td class="name">🚴Koo∴こ～🌳🌟🌙🖊</td>
+							<td class="message">いつものあの笑い声と笑顔、リアクションにとってもとっても癒されてます。仕事で長時間滞在出来ないのはごめんね</td>
+						</tr>
+						<tr>
+							<td class="name">この眼は闇が... よく見える🐬🐹🍎</td>
+							<td class="message">いつも楽しいリアクションありがとうございます🤗元気もらえてます🤗</td>
+						</tr>
+						<tr>
+							<td class="name"><i>Poko</i>ちゃん</td>
+							<td class="message">ゆゆこさん<br>いつもありがとう!🧒
+						</tr>
+						<tr>
+							<td class="name">成金丸🌕</td>
+							<td class="message">いつも笑顔で声掛けしてくれてありがとうございます。<br>ポコチャとリアルな活動の両立は上手く行ってるのでしょうね。<br>ファミリーに入ってフォローしました。 これからの活躍も楽しみにしてます😊</td>
+						</tr>
+							<td class="name">あっと🛡🐑</td>
+							<td class="message">ゆゆこさん。いつも楽しいお話ありがとう🙋‍♂️<br>あっとは今あまり枠に来れてませんが、アシスタントさん、みなさん、いつも暖かく接して頂いてありがとう🙇<br>楽しいゆゆこ枠大好きです。</td>
+						</tr>
+						<tr>
+							<td class="name">きたむー</td>
+							<td class="message">すごくアットホームな枠でゆゆこさん含めてリスナーのみなさんと作る雰囲気がすごく居心地がいい場所です。 出会えてよかったって思える枠です😁<br>いつも楽しい時間ありがとう❗<br>これからもよろしくお願いします✌</td>
+						</tr>
+						<tr>
+							<td class="name">神谷 悠一</td>
+							<td class="message">ゆゆこさん、ずっと前から好きでした♡フンがww永遠の85歳! 応援してます</td>
+						</tr>
+						<tr>
+							<td class="name">ましゃぴこ🐹🍎</td>
+							<td class="message">日毎ゆゆこさんとこの枠が好きになる🥰<br>もうかけがえのない居場所だよ<br>いつもありがとう🙇‍<br>真っ直ぐに頑張る貴女は本当に素敵で<br>大変な事も沢山あるけどいつも優しくて聡明な人達が応援し愛してくれているから乗り越えられる<br>だから大丈夫そして感謝<br>此処に居させて貰える事に本当に感謝しているよ😭😭😭<br>これからもみんな幸せでいられますよう想ってます愛シテマス<br>そして末永くよろしくなのです🥰🥰🥰</td>
+						</tr>
+						<tr>
+							<td class="name">ヤマト</td>
+							<td class="message">おがからの紹介で来てからどれぐらい経ったのか忘れたが、 今まで色んな事があったよなあ。それでも何とかゆゆこなりに頑張ってきたね。 凄いことだよなあと素直に思う。 ありがとう。明るく素直に穏やかにね。</td>
+						</tr>
+						<tr>
+							<td class="name">らいあん🐹🍎</td>
+							<td class="message">ゆゆこさん<br>ファミリーのみなさん<br><br>いつも楽しく過ごさせていただき<br>ありがとうございます<br><br>ゆゆこさんの夕方配信で出てくるお料理はいつも絶品!<br>
+今日はどんなの作ったんだろう?<br>美味しそうだなっていつも楽しみにしています<br><br>ゆゆこさんの手料理 いつか
+食べてみたいなー 笑<br>これからもお話しできるの楽しみにお邪魔しますね<br><br>ゆゆこさん<br>ファミリーのみなさんこれからもよろしくお願いします</td>
+						</tr>
+						<tr>
+							<td class="name">🐣☃🍮花火師💠🐿</td>
+							<td class="message">ゆゆこ 花火師 「たかゆん」 登場♫<br>いつも楽しい配信ありがとう❤<br>ゆゆことも長い付き合いになりました🥰<br>わーい🙌わーい🙌わーい🙌わーい🙌わーい🙌わーい🙌わーい🙌わーい🙌わーい🙌<br>最近は、仕事忙しくて潜る時間も少なくなってきたけど、行けるときは全力応援する 「わーい王子👑」です🤩これからもよろしくね♫</td>
+						</tr>
+						<tr>
+							<td class="name">ぐっちゃん🐓</td>
+							<td class="message">いつも楽しい配信ありがと59(0°~°0) 9</td>
+						</tr>
+						<tr>
+							<td class="name">あ⤴ちゃん🐹🍎</td>
+							<td class="message">おねしゃん!<br>いつも楽しい配信をありがとう😘💕<br>そして、こんな私をファミリーに迎えてくれて<br>おねしゃんには感謝しきれません😭<br>
+アイテムリアクションとても面白いです🤣<br>これからはおねしゃん単推しとして微力ながら応援させて下さい!!<br>おねしゃんとファミリーさんしか勝たん💖👊</td>
+						</tr>
+						<tr>
+							<td class="name">シェーレ</td>
+							<td class="message">自分は人生において、 女性アイドルのファンになった事がありません。 ゆゆこさんは、ルックスもお声も素敵ですが愛嬌があり、芯の強さを感じたり、時折見せる弱さも人間らしく、どのライバーさんにも似ていない魅力に溢れた方です。 リスナーさんとのやり取りも楽しく、お話も欠かさず、気遣いを忘れない。皆さんの為にいつも綺麗でいてくれる。コメントするとお返事も頂ける。「とてもじゃないが、俺にこんなマネはできん。 この人は天才なのかな? プロはスゲーな。｣と感心してしまいます。 こんな言い方をすると重荷に感じてしまうかもしれませんが、貴女は"ゆゆこ枠"は自分の人生の潤いであり癒しであり救いです。同じ時代にいられて大変嬉しく思っています。 ファミリーの皆さんも含め、出会いに感謝です。 これは奇跡でした。自分にとってゆゆこさんの配信は生き甲斐になっていて、自分のようなクズ人間にとってゆゆこさんは眩し過ぎて天使のようです。本当にいつもありがとうございます。</td>
+						</tr>
+						<tr>
+							<td class="name">🐹🍎🌳ぬまっち🌳🍎🐹</td>
+							<td class="message">ゆゆこと出会ってから2度目の冬、今回の冬も色々あったけど、楽しかった、ワー——— ` (*° \/° *) /—————————1
+-イ。こうして、 春夏秋冬それぞれに、これからもゆゆこやファミリーのみんなと一緒に、思い出を積み重ねていきたいなって思ってるよ</td>
+						</tr>
+						<tr>
+							<td class="name">フォノ🐹🍎</td>
+							<td class="message">ゆゆこさん<br><br>出会って1年3ヶ月、メインアシスタントとしては9ヶ月が経ちましたね。<br>アシスタントとしての自分の成長速度は相変わらず鈍足ですが、 ゆゆこさん配信の魅力があって、頼もしいアシスタントメンバーも、新しいファミリーメンバーもどんどん増えて、本当にずっと居て楽しい、 そして素敵な仲間と絆のある良い枠だなって思っています。これからも、ゆゆこさんと、みんなと一緒に居たいな!<br>栄養学の夢を追いながらも、色んな企画を練りながら楽しい配信も頑張ってくれているゆゆこさんに、いつもありがとう!<br>これからも､力になれるように頑張るね。</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 
