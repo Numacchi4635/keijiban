@@ -1,6 +1,9 @@
 .alert-color {
 	border-color: #ff0000;
 }
+h1 {
+	font-family: cursive;
+}
 table {
 	border-collapse: collapse;
 }
