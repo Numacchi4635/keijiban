@@ -4,6 +4,10 @@
 h1 {
 	font-family: cursive;
 }
+img.shrink {
+	width: 75%;
+	height: 75%;
+}
 table {
 	border-collapse: collapse;
 }
